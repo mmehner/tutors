@@ -1,0 +1,211 @@
+/* scripts and font */
+/* latin */
+
+.ltn{
+    font-family: LinuxBiolinumORegular, sans-serif;
+    font-size: 14px;
+    lang: en;
+}
+
+.ltn-small{
+    font-family: LinuxBiolinumORegular, sans-serif;
+    font-size: 10px;
+    lang: en;
+}
+
+.ltn-large{
+    font-family: LinuxBiolinumORegular, sans-serif;
+    font-size: 18px;
+    lang: en;
+}
+
+/* devanagari */
+.deva{
+    font-size: 17px;
+}
+
+.deva-large{
+    font-size: 22px;
+}
+
+@font-face {
+    font-family: Annapurna;
+    src: url(fonts/AnnapurnaSIL-Regular.woff);
+}
+
+@font-face {
+    font-family: Annapurna;
+    font-weight: bold;
+    src: url(fonts/AnnapurnaSIL-Bold.woff);
+}
+
+@font-face {
+    font-family: Sanskrit2003;
+    src: url(fonts/Sanskrit2003.ttf);
+}
+
+@font-face {
+    font-family: MurtySanskrit;
+    src: url(fonts/Murty-Sanskrit-1.00.otf);
+}
+
+.Annapurna{
+    font-family: Annapurna;
+}
+
+.Sanskrit2003{
+    font-family: Sanskrit2003;
+}
+
+.MurtySanskrit{
+    font-family: MurtySanskrit;
+}
+
+/* dbu-can */
+
+.bod{
+    font-family: Qomolangma;
+    font-size: 17px;
+}
+
+.bod-large{
+    font-family: Qomolangma;
+    font-size: 22px;
+}
+
+
+@font-face {
+    font-family: Qomolangma;
+    src: url(fonts/Qomolangma-UchenSuring.woff);
+}
+
+
+/* alefba-ye farsi */
+
+@font-face {
+    font-family: Lateef;
+    src: url(fonts/LateefGR-Regular.woff);
+}
+
+
+.alefba{
+    font-family: Lateef;
+    font-size: 17px;
+    lang: fa;
+    direction: rtl;
+}
+
+.alefba-large{
+    font-family: Lateef;
+    font-size: 22px;
+    lang: fa;
+    direction: rtl;
+}
+
+
+table, tr, th, td {
+    text-align: left;
+    vertical-align: middle;
+    padding: 1px;
+}
+
+.blank-row
+{
+    height: 15px !important; /* overwrites any other rules */
+}
+
+.msgs{
+    width: 100%;
+    position: relative;
+}
+
+
+.cmd {
+    margin-top: 10px;
+    clear: both;
+    width: 250px;
+    float: right;
+    height: 50px;
+    position: sticky;
+    bottom: 20px;
+    background:  #b3b3b3;
+    border-radius: 15px;
+}
+
+#input {
+    width: 200px;
+    border: 0px;
+    margin-right: 10px;
+    margin-top: 7px;
+    float: right;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background:  #b3b3b3;
+}
+
+
+.button {
+    background-color:  #313131;
+    color: #b3b3b3;
+    border: 4px solid  #313131;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color:  #b3b3b3;
+    color: #313131;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul li{
+    display:inline-block;
+    clear: both;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 2px;
+}
+
+.bot{
+    background: #fcd08b;
+    float: left;
+    color:  #313131; 
+}
+
+.green{
+    background: #9cbf9c;
+}
+
+.red{
+    background: #d9a0a0; 
+}
+
+.me{
+    background: #b3b3b3;
+    float: right;
+    color:  #313131; 
+}
+
+.bot + .me{
+    border-bottom-right-radius: 5px;
+}
+
+.me + .me{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.me:last-of-type {
+    border-bottom-right-radius: 30px;
+}
