@@ -2,7 +2,9 @@ const type = "transcription";
 
 const script = "deva";
 
-const fonts = [ "Annapurna", "Sanskrit2003", "MurtySanskrit", ];
+const fonts = [ "Adishila", "AdishilaDev", "AdishilaSan", "AdishilaSamskrta", "Aksharyogini", "Annapurna", "Chandas", "MurtySanskrit", "Nakula", "Samyak", "Sanskrit2003", "Shobhika", "Uttara", ];
+
+const defaultfont = "Shobhika"
 
 const field = {
     "question": 0,
@@ -2028,7 +2030,7 @@ const table = '<table class="deva-large" style="text-align: center; vertical-ali
       '</table>';
 
 const dia = {
-    "intro" : [ "स्वागतम्।", '<span class="ltn">Please transcribe the following syllables.<br/>For help type</span> रक्ष माम् <span class="ltn"><i>rakSa mAm</i>,<br/> to change fonts type </span> लिपि <span class="ltn"><i>lipi</i>.</span>' ],
+    "intro" : [ "स्वागतम्।", '<span class="ltn">Please transcribe the following syllables.<br/>For help type</span> रक्ष माम् <span class="ltn"><i>rakSa mAm</i>,<br/> to change font type </span> मुद्राक्षर <span class="ltn"><i>mudrAkSara</i>.</span>' ],
     "empty" : "अहो चित्रम्। समाप्तम्।",
     "tryagain" : "ॐ शान्तिः। पुनर्लिख्यताम्।",
     "correct" : "समीचीनम्। ",
@@ -2037,6 +2039,6 @@ const dia = {
     "response": [],
     "commands": {
 	"help" : "rakSa mAm",
-	"chfont" : "lipi",
+	"chfont" : "mudrAkSara",
     },
 };

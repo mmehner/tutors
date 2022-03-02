@@ -1,6 +1,6 @@
 const randomData = shuffleArray(data);
 
-var curfont = fonts[0]
+var curfont = defaultfont
 
 // counters
 var round = 1;

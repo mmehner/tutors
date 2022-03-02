@@ -21,11 +21,11 @@
 
 /* devanagari */
 .deva{
-    font-size: 17px;
+    font-size: 20px;
 }
 
 .deva-large{
-    font-size: 22px;
+    font-size: 30px;
 }
 
 @font-face {
@@ -40,6 +40,91 @@
 }
 
 @font-face {
+    font-family: Shobhika;
+    src: url(fonts/Shobhika-Regular.otf);
+}
+
+@font-face {
+    font-family: Shobhika;
+    font-weight: bold;
+    src: url(fonts/Shobhika-Bold.otf);
+}
+
+@font-face {
+    font-family: Adishila;
+    src: url(fonts/Adishila.ttf);
+}
+
+@font-face {
+    font-family: Adishila;
+    font-weight: bold;
+    src: url(fonts/AdishilaBold.ttf);
+}
+
+@font-face {
+    font-family: AdishilaDev;
+    src: url(fonts/AdishilaDev.ttf);
+}
+
+@font-face {
+    font-family: AdishilaDev;
+    font-weight: bold;
+    src: url(fonts/AdishilaDevB.ttf);
+}
+
+@font-face {
+    font-family: AdishilaSan;
+    src: url(fonts/AdishilaSan.ttf);
+}
+
+@font-face {
+    font-family: AdishilaSan;
+    font-weight: bold;
+    src: url(fonts/AdishilaSanBoldB.ttf);
+}
+
+@font-face {
+    font-family: AdishilaSamskrta;
+    src: url(fonts/AdishilaSamskrta.ttf);
+}
+
+@font-face {
+    font-family: Aksharyogini;
+    src: url(fonts/AksharyoginiNormal.ttf);
+}
+
+@font-face {
+    font-family: Aksharyogini;
+    font-weight: bold;
+    src: url(fonts/AksharyoginiBold.ttf);
+}
+
+@font-face {
+    font-family: Chandas;
+    src: url(fonts/chandas.ttf);
+}
+
+@font-face {
+    font-family: Nakula;
+    src: url(fonts/nakula.ttf);
+}
+
+@font-face {
+    font-family: Sahadeva;
+    src: url(fonts/sahadeva.ttf);
+}
+
+@font-face {
+    font-family: Samyak;
+    src: url(fonts/Samyak.ttf);
+}
+
+@font-face {
+    font-family: Uttara;
+    src: url(fonts/uttara.ttf);
+}
+
+@font-face {
     font-family: Sanskrit2003;
     src: url(fonts/Sanskrit2003.ttf);
 }
@@ -49,34 +134,238 @@
     src: url(fonts/Murty-Sanskrit-1.00.otf);
 }
 
+
+.Adishila{
+    font-family: Adishila;
+}
+
+
+.AdishilaDev{
+    font-family: AdishilaDev;
+}
+
+.AdishilaSan{
+    font-family: AdishilaSan;
+}
+
+.AdishilaSamskrta{
+    font-family: AdishilaSamskrta;
+}
+
+.Adishila{
+    font-family: Adishila;
+}
+
+
+.Aksharyogini{
+    font-family: Aksharyogini;
+}
+
 .Annapurna{
     font-family: Annapurna;
 }
 
-.Sanskrit2003{
-    font-family: Sanskrit2003;
+
+.Chandas{
+    font-family: Chandas;
 }
 
 .MurtySanskrit{
     font-family: MurtySanskrit;
 }
 
+.Nakula{
+    font-family: Nakula;
+}
+
+.Sahadeva{
+    font-family: Sahadeva;
+}
+
+.Samyak{
+    font-family: Samyak;
+}
+
+.Sanskrit2003{
+    font-family: Sanskrit2003;
+}
+
+
+.Shobhika{
+    font-family: Shobhika;
+}
+
+.Uttara{
+    font-family: Uttara;
+}
+
 /* dbu-can */
 
 .bod{
-    font-family: Qomolangma;
-    font-size: 17px;
+    font-size: 20px;
 }
 
 .bod-large{
-    font-family: Qomolangma;
-    font-size: 22px;
+    font-size: 30px;
+}
+
+@font-face {
+    font-family: DDCUchen;
+    src: url(fonts/DDC_Uchen.ttf);
+}
+
+@font-face {
+    font-family: Jomolhari;
+    src: url(fonts/Jomolhari-alpha3c-0605331.ttf);
+}
+
+@font-face {
+    font-family: QomolangmaBetsu;
+    src: url(fonts/Qomolangma-Betsu.woff);
 }
 
 
 @font-face {
-    font-family: Qomolangma;
+    font-family: QomolangmaChuyig;
+    src: url(fonts/Qomolangma-Chuyig.woff);
+}
+
+@font-face {
+    font-family: QomolangmaDrutsa;
+    src: url(fonts/Qomolangma-Drutsa.woff);
+}
+
+@font-face {
+    font-family: QomolangmaDunhuang;
+    src: url(fonts/Qomolangma-Dunhuang.woff);
+}
+
+@font-face {
+    font-family: QomolangmaHoryig;
+    src: url(fonts/Qomolangma-Horyig.woff);
+}
+
+@font-face {
+    font-family: QomolangmaTsumachu;
+    src: url(fonts/Qomolangma-Tsumachu.woff);
+}
+
+@font-face {
+    font-family: QomolangmaTsuring;
+    src: url(fonts/Qomolangma-Tsuring.woff);
+}
+
+@font-face {
+    font-family: QomolangmaTsutong;
+    src: url(fonts/Qomolangma-Tsutong.woff);
+}
+
+@font-face {
+    font-family: QomolangmaUchenSarchen;
+    src: url(fonts/Qomolangma-UchenSarchen.woff);
+}
+
+@font-face {
+    font-family: QomolangmaUchenSarchung;
+    src: url(fonts/Qomolangma-UchenSarchung.woff);
+}
+
+@font-face {
+    font-family: QomolangmaUchenSuring;
     src: url(fonts/Qomolangma-UchenSuring.woff);
+}
+
+@font-face {
+    font-family: QomolangmaUchenSutung;
+    src: url(fonts/Qomolangma-Sutung.woff);
+}
+
+@font-face {
+    font-family: QomolangmaWoodblock;
+    src: url(fonts/Qomolangma-Woodblock.woff);
+}
+
+@font-face {
+    font-family: TibMachUni;
+    src: url(fonts/TibMachUni-1.901b.ttf);
+}
+
+@font-face {
+    font-family: YagpoUni;
+    src: url(fonts/YagpoUni.ttf);
+}
+
+
+.DDCUchen{
+    font-family: DDCUchen;
+}
+
+.Jomolhari{
+    font-family: Jomolhari;
+}
+
+.QomolangmaBetsu{
+    font-family: QomolangmaBetsu;
+}
+
+
+.QomolangmaChuyig{
+    font-family: QomolangmaChuyig;
+}
+
+
+.QomolangmaDrutsa{
+    font-family: QomolangmaDrutsa;
+}
+
+
+.QomolangmaDunhuang{
+    font-family: QomolangmaDunhuang;
+}
+
+.QomolangmaHoryig{
+    font-family: QomolangmaHoryig;
+}
+
+.QomolangmaTsumachu{
+    font-family: QomolangmaTsumachu;
+}
+
+.QomolangmaTsuring{
+    font-family: QomolangmaTsuring;
+}
+
+.QomolangmaTsutong{
+    font-family: QomolangmaTsutong;
+}
+
+.QomolangmaUchenSarchen{
+    font-family: QomolangmaUchenSarchen;
+}
+
+.QomolangmaUchenSarchung{
+    font-family: QomolangmaUchenSarchung;
+}
+
+.QomolangmaUchenSuring{
+    font-family: QomolangmaUchenSuring;
+    src: url(fonts/Qomolangma-UchenSuring.woff);
+}
+
+.QomolangmaUchenSutung{
+    font-family: QomolangmaUchenSutung;
+}
+
+.QomolangmaWoodblock{
+    font-family: QomolangmaWoodblock;
+}
+
+.TibMachUni {
+    font-family: TibMachUni;
+}
+
+.YagpoUni {
+    font-family: YagpoUni;
 }
 
 
