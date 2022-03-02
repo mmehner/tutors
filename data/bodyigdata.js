@@ -4,7 +4,7 @@ const script = "bod";
 
 const fonts = [ "DDCUchen", "Jomolhari", "QomolangmaBetsu", "QomolangmaChuyig", "QomolangmaDrutsa", "QomolangmaDunhuang", "QomolangmaHoryig", "QomolangmaTsumachu", "QomolangmaTsuring", "QomolangmaTsutong", "QomolangmaUchenSarchen", "QomolangmaUchenSarchung", "QomolangmaUchenSuring", "QomolangmaUchenSutung", "QomolangmaWoodblock", "TibMachUni", "YagpoUni" ]
 
-const defaultfont = "DDCUchen"
+const defaultfont = "YagpoUni"
 
 const field = {
     "question": 0,

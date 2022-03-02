@@ -21,11 +21,11 @@
 
 /* devanagari */
 .deva{
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .deva-large{
-    font-size: 30px;
+    font-size: 26px;
 }
 
 @font-face {
@@ -202,11 +202,11 @@
 /* dbu-can */
 
 .bod{
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .bod-large{
-    font-size: 30px;
+    font-size: 26px;
 }
 
 @font-face {
