@@ -391,6 +391,81 @@
     direction: rtl;
 }
 
+/* mongol */
+.mongol{
+    font-size: 19px;
+}
+
+.mongol-large{
+    font-size: 26px;
+}
+
+@font-face {
+    font-family: MongolianTitle; 
+    src: url(fonts/mngltitleotf.ttf);
+}
+
+
+@font-face {
+    font-family: MongolianWhite; 
+    src: url(fonts/mnglwhiteotf.ttf);
+}
+
+
+@font-face {
+    font-family: MongolianWriting;
+    src: url(fonts/mnglwritingotf.ttf);
+}
+
+
+@font-face {
+    font-family: MongolianArt; 
+    src: url(fonts/mnglartotf.ttf);
+}
+
+
+@font-face {
+    font-family: ClassicalMongolianDashitseden; 
+    src: url(fonts/cmdashitseden.ttf);
+}
+
+
+@font-face {
+    font-family: MongolianScript;
+    src: url(fonts/MongolianScript.ttf);
+}
+
+
+.MongolianTitle {
+    font-family: MongolianTitle;
+}
+
+
+.MongolianWhite {
+    font-family: MongolianWhite;
+}
+
+
+.MongolianWriting {
+    font-family: MongolianWriting;
+}
+
+
+.MongolianArt {
+    font-family: MongolianArt;
+}
+
+
+.ClassicalMongolianDashitseden {
+    font-family: ClassicalMongolianDashitseden;
+}
+
+
+.MongolianScript {
+    font-family: MongolianScript;
+}
+
+
 
 table, tr, th, td {
     text-align: left;

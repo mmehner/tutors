@@ -1,6 +1,13 @@
-const randomData = shuffleArray(data);
+// global switches
+var playing = false;
+var inverted = false;
+var transliterating = true;
+var chap = false;
 
+// global variables
 var curfont = defaultfont
+var curmode
+var curdata
 
 // counters
 var round = 1;
@@ -17,14 +24,22 @@ document.addEventListener("DOMContentLoaded", () => {
 	    inputField.value = "";
 	    let text = input.replace(/^\s+/g, "").replace(/\s+$/g, "").replace(/\s+/g, " ");
 	    
-	    if ( text !== "") {
-		output(text);
+	    if ( text == "" ) {
+		addReply(dia.help);
+		repeat_if_playing();
+	    } else { 
+		process(text);
 		inputField.scrollIntoView();
 	    }
 	}
     });
     
 });
+
+function resetroundscore() {
+    round = 1;
+    score = 0;
+}
 
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
@@ -44,75 +59,202 @@ function introduce() {
     let sleep = ms => {  
 	return new Promise(resolve => setTimeout(resolve, ms));  
     };
-
-    addReply(dia.intro[0])
     
-    sleep(700).then(() => {
-	addReply(dia.intro[1]);
+    addReply(dia.intro);
+    sleep(500).then(() => {
+	addReply(dia.help);
 	sleep(500).then(() => {
-	    excercise(randomData,round-1);
+	    mode_choice();
 	});
     });
-
 }
 
-function excercise(array,index) {
-    if ( index <= array.length ) {
-	addReplyL(array[index][0]);
+function mode_choice() {
+    let sleep = ms => {  
+	return new Promise(resolve => setTimeout(resolve, ms));  
+    };
+    
+    addReply(dia.choice);
+    sleep(500).then(() => {
+	addButtons(modes, changemode);
+    });
+}
+
+function exercise(data, index) {
+    playing = true;
+
+    if ( index+1 <= data.length ) {
+	
+	switch(curmode){
+	case "script": // i.e. one-way
+	    exercise_script(data,index);
+	    break;
+	case "vocab": // i.e. two-way
+	    exercise_vocab(data,index);
+	    break;
+	case "root": // i.e. step-by-step
+	    exercise_root(curdata,index); 
+	    break;
+	};
+	
     } else {
+	playing = false
 	addReplyG(dia.empty);
+	mode_choice();
     }
 }
 
-function output(input) {
-    let inputTranslit = langSpecTranslit(input);
-    let cur = curset();
-    let question = cur[field.question];
-    let answer = cur[field.answer];
-    let answerTranslit = langSpecTranslit(cur[field.answer]);
+function exercise_script(array, index) {
+    transliterating = true;
+    addReplyL(array[index][0]);
+}
 
-    addInput(inputTranslit);
+function exercise_vocab(array, index) {
+    let invert = Math.random() < 0.5; //randomly invert
+    if (invert) {
+	transliterating = true;
+	addReplyL(array[index][2]);
+    } else {
+	transliterating = false;
+	addReplyL(array[index][0]);
+    }
+}
+
+function exercise_root(array, index) {
+    transliterating = true;
+    addReplyL(array[index][0]);
+}
+
+function process(input) {
     
-    if ( input == dia.commands.help ) {
-	addReply(table);	
-    } else if ( input == dia.commands.chfont ) {
-	addButtons(fonts,changefont)
-    } else if  ( input.match(/[^a-zA-Z0-9']/g) !== null ) {
+    display_input(input);
+    
+    if ( commands.includes(input) ) {
+	follow_command(commands.indexOf(input));
+    } else if (playing) {
+	set_question_answer(input);
+    } else {
+	mode_choice();
+    }
+}
+
+function set_question_answer(input) {
+
+    let cur =  curdata[round-1];
+    let question = ""
+    let answer = ""
+
+    // set variables according to mode
+    switch(curmode){
+	
+    case "script":
+	question = cur[0];
+	answer = cur[1];
+
+	compare_with_answer(input,question,answer)
+	break;
+	
+    case "vocab":
+	if (transliterating) {
+	    question = cur[2] + " " + cur[0];
+	    answer = cur[1];
+	} else {
+	    question = cur[0];
+	    answer = cur[2];
+	};
+
+	compare_with_answer(input,question,answer)
+	break;
+	
+    case "root":
+	question = cur[0] + " – " + cur[1];
+	answer = cur[2]
+
+	let regexp = false 
+	// check for regexp
+	if ( answer.match(/\\|/g) !== null ) { regexp = true }
+
+	if ( (regexp && input.match(answer)) || (!regexp && input === answer)) {
+	    answer = input + " " + cur[3];
+
+	    let arr = [cur[3]]
+	    let i = curdata.length -1
+
+	    while (arr.length < 4) {
+		let n = Math.floor(Math.random() * (i + 1));
+		if (! arr.includes(curdata[n][3])) {
+		    arr.push(curdata[n][3]);
+		}
+	    }
+	    
+	    addButtons(shuffleArray(arr),add_button_value,[input,question,answer]);
+	}
+	else {
+	    answer = translit_bracket(cur[2]) + " " + cur[3];
+	    transliterating=false
+	    compare_with_answer(input, question, answer)
+	    transliterating=true
+	}
+    }
+
+}
+
+function compare_with_answer(input, question, answer) {
+    
+    if  ( input.match(/[^a-zA-Z0-9' ]/g) !== null ) {
 	addReply(dia.tryagain);
     } else if ( input === answer ) {
 	score += 1;
 	addReplyG(dia.correct + quota());
 	round += 1;
-    } else {
-	let reply = dia.incorrect + " <b>" + question + "<span class=\"ltn\"> " + answerTranslit + "</span></b> " + dia.correction + quota();
+    } else { // wrong answer
+	let reply = dia.incorrect + " <b>" + question + '<span class="ltn"> ' + translit_bracket(answer)  + "</span></b> " + dia.correction + quota();
 	addReplyR(reply);
 	round += 1;
     }
-    
-    excercise(randomData,round-1);
 
+    exercise(curdata, round-1);
 }
 
-function langSpecTranslit(input) {
-    let out=""
-    switch(script)
-    {
-	case "deva":
-	out = translitDeva(input);
-	case "bod":
-	out = input;
-	default:
+function display_input(input) {
+    addInput(translit_bracket(input));
+}
+
+function follow_command(index) {
+    switch(index) {
+    case 0: // help
+	addReply(dia.help);
+	repeat_if_playing();
+	break;
+    case 1: // script table
+	addReply(table);
+	repeat_if_playing();
+	break;
+    case 2: // change font
+	addButtons(fonts,changefont);
+	repeat_if_playing();
+	break;
+    case 3: // change mode
+	playing = false;
+	addButtons(modes,changemode)
 	break;
     }
-    return out
 }
 
-function translitDeva(input) {
+function translit_bracket(input) {
     let out = input;
-    if ( input !== hk2iast(input) ) {
-	out = hk2iast(input) + " [" + input + "]";
+    
+    if ( transliterating ) {
+	
+	if ( input !== ltn2transcript(input) ) {
+	    out = ltn2transcript(input) + " [" + input + "]";
+	}
+	
+	return out;
+    } else {
+	return out;
     }
-    return out;
+    
 }
 
 function addInput(input) {
@@ -138,7 +280,6 @@ function addReplyL(reply) {
     addReply(reply, script + "-large")
 }
 
-
 function addReply(reply, cl = "") {
     const inputField = document.getElementById("input");
     
@@ -160,7 +301,7 @@ function addReply(reply, cl = "") {
     });
 }
 
-function addButtons(buttonArray,cmd) {
+function addButtons(buttonArray,cmd,data = false) {
     const inputField = document.getElementById("input");
     const id = buttonNo.toString();
     
@@ -192,7 +333,11 @@ function addButtons(buttonArray,cmd) {
 	    cbutton.setAttributeNode(buttonAtt);
 	
 	    cbutton.addEventListener('click', () => {
-		cmd(button);
+		if ( ! data ) {
+		    cmd(button);
+		} else {
+		    cmd(button,data)
+		}
 	    })
 	    document.getElementById(botDivId.value).appendChild(cbutton);
 	    
@@ -202,43 +347,92 @@ function addButtons(buttonArray,cmd) {
     });
 }
 
+function repeat_if_playing() {
+    if (playing) {
+	exercise(curdata, round-1)
+    } else {
+	mode_choice();
+    }
+}
+
 function changefont(font){
     curfont = font;
-    excercise(randomData,round-1);
+    repeat_if_playing();
 }
 
-function hk2iast(str) {
-    str = str.replace(/A/g, "ā");
-    str = str.replace(/I/g, "ī");
-    str = str.replace(/U/g, "ū");
-    str = str.replace(/lRR/g, "ḹ");
-    str = str.replace(/lR/g, "ḷ");
-    str = str.replace(/RR/g, "ṝ");
-    str = str.replace(/R/g, "ṛ");
-    str = str.replace(/M/g, "ṃ");
-    str = str.replace(/H/g, "ḥ");
-    str = str.replace(/G/g, "ṅ");
-    str = str.replace(/J/g, "ñ");
-    str = str.replace(/T/g, "ṭ");
-    str = str.replace(/D/g, "ḍ");
-    str = str.replace(/N/g, "ṇ");
-    str = str.replace(/z/gi, "ś");
-    str = str.replace(/S/g, "ṣ");
-    return str;
+function changemode(mode){
+    curmode = mode_map[mode][0];
+    chap = mode_map[mode][1];
+    resetroundscore();
+
+    var curintro = mode_map[mode][3];
+    addReplyG(dia[curintro])
+
+    if ( chap ) {
+	var chapdata = mode_map[mode][2];
+	var chapters = ["all"].concat(Object.keys(chapdata));
+	addButtons(chapters, choosechapter, chapdata);
+    } else {
+	curdata = shuffleArray(mode_map[mode][2]) 
+	exercise(curdata,round-1)
+    }
 }
 
-function num2devastr(n) {
+function choosechapter(chapter, data) {
+    if ( chapter = "all" ) {
+
+	let all = []
+	let chapters_a = Object.keys(data);
+	
+	for (var i = chapters_a.length -1 ; i >= 0; i--) {    
+	    chap_a = data[chapters_a[i]]
+	    
+	    for (var j = chap_a.length -1 ; j >= 0; j--) {
+		all.push(chap_a[j])
+	    };
+	};
+	
+	curdata = shuffleArray(all)
+    } else {
+	curdata = shuffleArray(data[chapter]);
+    }
+
+   
+    exercise(curdata,round-1);
+}
+
+function add_button_value(str,array) {
+    let display = translit_bracket(array[0]) + " " + str;
+    let input = array[0] + " " + str;
+    let question = array[1];
+    let answer = array[2];
+    
+    addInput(display);
+    compare_with_answer(input,question,answer);
+}
+
+
+function quota() {
+    let out=""
+    out = num2scriptstr(score) + "/" + num2scriptstr(round);
+    return out
+}
+
+
+// remove later
+
+function num2mongolstr(n) {
     let nstr = n.toString(10);
-    nstr = nstr.replace(/0/g, "०");
-    nstr = nstr.replace(/1/g, "१");
-    nstr = nstr.replace(/2/g, "२");
-    nstr = nstr.replace(/3/g, "३");
-    nstr = nstr.replace(/4/g, "४");
-    nstr = nstr.replace(/5/g, "५");
-    nstr = nstr.replace(/6/g, "६");
-    nstr = nstr.replace(/7/g, "७");
-    nstr = nstr.replace(/8/g, "८");
-    nstr = nstr.replace(/9/g, "९");
+    nstr = nstr.replace(/0/g, "᠐");
+    nstr = nstr.replace(/1/g, "᠑");
+    nstr = nstr.replace(/2/g, "᠒");
+    nstr = nstr.replace(/3/g, "᠓");
+    nstr = nstr.replace(/4/g, "᠔");
+    nstr = nstr.replace(/5/g, "᠕");
+    nstr = nstr.replace(/6/g, "᠖");
+    nstr = nstr.replace(/7/g, "᠗");
+    nstr = nstr.replace(/8/g, "᠘");
+    nstr = nstr.replace(/9/g, "᠙");
     return nstr;
 }
 
@@ -255,25 +449,4 @@ function num2bodstr(n) {
     nstr = nstr.replace(/8/g, "༨");
     nstr = nstr.replace(/9/g, "༩");
     return nstr;
-}
-
-function quota() {
-    let out=""
-    switch(script)
-    {
-	case "deva":
-	out = num2devastr(score) + "/" + num2devastr(round);
-	break;
-	case "bod":
-	out = num2bodstr(score) + "/" + num2bodstr(round);
-	break;
-	default:
-	break;
-    }
-    return out
-}
-
-
-function curset() {
-    return randomData[round-1];
 }
