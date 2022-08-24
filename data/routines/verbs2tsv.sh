@@ -74,6 +74,7 @@ sed -e '/\\vw{.*/d' < $input  |
 	-e 's_\\IPV_imperative_' \
 	-e 's_\\IMP_imperfect_' \
 	-e 's_\\INJ_injunctive_' \
+	-e 's_\\PFT_periphrastiv future_' \
 	-e 's_\\PF_perfect_' \
 	-e 's_\\PPRS_present / perfect_' \
 	-e 's_\\PPF_periphrastic perfect_' \

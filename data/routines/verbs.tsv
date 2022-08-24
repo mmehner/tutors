@@ -379,7 +379,7 @@ bhañj 	(VII  P)	bhanakti	indicative
 bhañj 	(VII  P)	bhanaktu	imperative
 bhañj 	(VII  P)	bhañjyāt	optative
 bhañj 	(VII  P)	bhaṅkṣyati	future
-bhañj 	(VII  P)	bhaṅktā	perfectT
+bhañj 	(VII  P)	bhaṅktā	periphrastiv future
 bhañj 	(VII  P)	bhaṅktvā	absolutive
 bharts 	(X Ā)	bhartsayām āsa	periphrastic perfect
 bharts 	(X Ā)	bhartsayant	present active participle
@@ -543,7 +543,7 @@ bhū 	(I P)	bhāvayati	causative indicative
 bhū 	(I P)	bhāvayitavya	causative gerundive
 bhū 	(I P)	bhavet	optative
 bhū 	(I P)	bhaviṣyati	future
-bhū 	(I P)	bhavitā	perfectT
+bhū 	(I P)	bhavitā	periphrastiv future
 bhū 	(I P)	bhavitavya	gerundive
 bhū 	(I P)	bhavitum	infinitive
 bhū 	(I P)	bhāvya	causative gerundive
@@ -589,7 +589,7 @@ bhūṣ 	(X PĀ)	abhūṣi	passive aorist
 bhūṣ 	(X PĀ)	bhūṣaṇīya	gerundive
 bhūṣ 	(X PĀ)	bhūṣayate	indicative
 bhūṣ 	(X PĀ)	bhūṣayati	indicative
-bhūṣ 	(X PĀ)	bhūṣayitā	perfectT
+bhūṣ 	(X PĀ)	bhūṣayitā	periphrastiv future
 bhūṣ 	(X PĀ)	bhūṣayitavya	gerundive
 bhūṣ 	(X PĀ)	bhūṣita	past participle
 bhūṣ 	(X PĀ)	bhūṣya	gerundive
@@ -808,7 +808,7 @@ ci 	(V PĀ)	cayanīya	gerundive
 ci 	(V PĀ)	cāyayate	causative indicative
 ci 	(V PĀ)	ceṣyate	future
 ci 	(V PĀ)	ceṣyati	future
-ci 	(V PĀ)	cetā	perfectT
+ci 	(V PĀ)	cetā	periphrastiv future
 ci 	(V PĀ)	cetum	infinitive
 ci 	(V PĀ)	cicīṣati	desiderative indicative
 ci 	(V PĀ)	cikāya	perfect
@@ -914,7 +914,7 @@ dā 	(III PĀ)	dāpayitavya	causative gerundive
 dā 	(III PĀ)	dāpya	causative gerundive
 dā 	(III PĀ)	dāsyate	future
 dā 	(III PĀ)	dāsyati	future
-dā 	(III PĀ)	dātā	perfectT
+dā 	(III PĀ)	dātā	periphrastiv future
 dā 	(III PĀ)	dātavya	gerundive
 dā 	(III PĀ)	datse	indicative
 dā 	(III PĀ)	dattaḥ	indicative
@@ -1070,7 +1070,7 @@ dhṛ 	(I Ā)	dhārayati	causative indicative
 dhṛ 	(I Ā)	dhārayitavya	causative gerundive
 dhṛ 	(I Ā)	dhariṣyate	future
 dhṛ 	(I Ā)	dhariṣyati	future
-dhṛ 	(I Ā)	dhartā	perfectT
+dhṛ 	(I Ā)	dhartā	periphrastiv future
 dhṛ 	(I Ā)	dhartavya	gerundive
 dhṛ 	(I Ā)	dhartum	infinitive
 dhṛ 	(I Ā)	dhārya	gerundive
@@ -1298,7 +1298,7 @@ dṛś 	(I P)	darśayati	causative indicative
 dṛś 	(I P)	didṛkṣate	desiderative indicative
 dṛś 	(I P)	drakṣyate	future
 dṛś 	(I P)	drakṣyati	future
-dṛś 	(I P)	draṣṭā	perfectT
+dṛś 	(I P)	draṣṭā	periphrastiv future
 dṛś 	(I P)	draṣtavya	gerundive
 dṛś 	(I P)	draṣṭum	infinitive
 dṛś 	(I P)	dṛṣṭa	past participle
@@ -1541,7 +1541,7 @@ gam 	(I P)	gamiṣyati	future
 gam 	(I P)	°gamya	absolutive
 gam 	(I P)	gamya	gerundive
 gam 	(I P)	gamyate	present passive
-gam 	(I P)	gantā	perfectT
+gam 	(I P)	gantā	periphrastiv future
 gam 	(I P)	gantavya	gerundive
 gam 	(I P)	gantum	infinitive
 gam 	(I P)	gata	past participle
@@ -1670,7 +1670,7 @@ grah 	(IX PĀ)	grāhayate	causative indicative
 grah 	(IX PĀ)	grāhayati	causative indicative
 grah 	(IX PĀ)	grahīṣyate	future
 grah 	(IX PĀ)	grahīṣyati	future
-grah 	(IX PĀ)	grahītā	perfectT
+grah 	(IX PĀ)	grahītā	periphrastiv future
 grah 	(IX PĀ)	grahītavya	gerundive
 grah 	(IX PĀ)	grahītum	infinitive
 grah 	(IX PĀ)	grāhya	causative gerundive
@@ -1844,7 +1844,7 @@ han 	(II P)	haniṣyate	future
 han 	(II P)	haniṣyati	future
 han 	(II P)	hanmaḥ	indicative
 han 	(II P)	hanmi	indicative
-han 	(II P)	hantā	perfectT
+han 	(II P)	hantā	periphrastiv future
 han 	(II P)	hantavya	gerundive
 han 	(II P)	hanti	indicative
 han 	(II P)	hantu	imperative
@@ -1969,7 +1969,7 @@ hṛ 	(I PĀ)	hārayati	causative indicative
 hṛ 	(I PĀ)	°hārayitavya	causative gerundive
 hṛ 	(I PĀ)	hariṣyate	future
 hṛ 	(I PĀ)	hariṣyati	future
-hṛ 	(I PĀ)	hartā	perfectT
+hṛ 	(I PĀ)	hartā	periphrastiv future
 hṛ 	(I PĀ)	hartavya	gerundive
 hṛ 	(I PĀ)	hartum	infinitive
 hṛ 	(I PĀ)	hārya	gerundive
@@ -2079,7 +2079,7 @@ i 	(II  P, I P)	āyayati	causative indicative
 i 	(II  P, I P)	emi	indicative
 i 	(II  P, I P)	eṣi	indicative
 i 	(II  P, I P)	eṣyati	future
-i 	(II  P, I P)	etā	perfectT
+i 	(II  P, I P)	etā	periphrastiv future
 i 	(II  P, I P)	etavya	gerundive
 i 	(II  P, I P)	eti	indicative
 i 	(II  P, I P)	etu	imperative
@@ -2213,7 +2213,7 @@ jan 	(IV Ā)	janayati	causative indicative
 jan 	(IV Ā)	janayitavya	causative gerundive
 jan 	(IV Ā)	janiṣyate	future
 jan 	(IV Ā)	janita	causative past participle
-jan 	(IV Ā)	janitā	perfectT
+jan 	(IV Ā)	janitā	periphrastiv future
 jan 	(IV Ā)	janitavya	gerundive
 jan 	(IV Ā)	janitum	infinitive
 jan 	(IV Ā)	janitvā	absolutive
@@ -2297,7 +2297,7 @@ jñā 	(IX PĀ)	jñāpya	causative gerundive
 jñā 	(IX PĀ)	jñāsyate	future
 jñā 	(IX PĀ)	jñāsyati	future
 jñā 	(IX PĀ)	jñāta	past participle
-jñā 	(IX PĀ)	jñātā	perfectT
+jñā 	(IX PĀ)	jñātā	periphrastiv future
 jñā 	(IX PĀ)	jñātavya	gerundive
 jñā 	(IX PĀ)	jñātum	infinitive
 jñā 	(IX PĀ)	jñātvā	absolutive
@@ -2692,7 +2692,7 @@ kṛ 	(VIII PĀ)	karomi	indicative
 kṛ 	(VIII PĀ)	karoṣi	indicative
 kṛ 	(VIII PĀ)	karoti	indicative
 kṛ 	(VIII PĀ)	karotu	imperative
-kṛ 	(VIII PĀ)	kartā	perfectT
+kṛ 	(VIII PĀ)	kartā	periphrastiv future
 kṛ 	(VIII PĀ)	kartavya	gerundive
 kṛ 	(VIII PĀ)	kartum	infinitive
 kṛ 	(VIII PĀ)	kārya	gerundive
@@ -2872,7 +2872,7 @@ kvath 	(I P)	kvathita	past participle
 kvath 	(I P)	kvāthyate	causative passive
 labh 	(I Ā)	alabdha	aorist
 labh 	(I Ā)	labdha	past participle
-labh 	(I Ā)	labdhā	perfectT
+labh 	(I Ā)	labdhā	periphrastiv future
 labh 	(I Ā)	labdhavya	gerundive
 labh 	(I Ā)	labdhvā	absolutive
 labh 	(I Ā)	labhanīya	gerundive
@@ -3581,7 +3581,7 @@ nī 	(I PĀ)	nayitavya	gerundive
 nī 	(I PĀ)	nayitum	infinitive
 nī 	(I PĀ)	nayitvā	absolutive
 nī 	(I PĀ)	neṣyati	future
-nī 	(I PĀ)	netā	perfectT
+nī 	(I PĀ)	netā	periphrastiv future
 nī 	(I PĀ)	netavya	gerundive
 nī 	(I PĀ)	netum	infinitive
 nī 	(I PĀ)	neya	gerundive
@@ -3603,7 +3603,7 @@ nind 	(I P)	nindati	indicative
 nind 	(I P)	nindayati	causative indicative
 nind 	(I P)	nindiṣyati	future
 nind 	(I P)	nindita	past participle
-nind 	(I P)	ninditā	perfectT
+nind 	(I P)	ninditā	periphrastiv future
 nind 	(I P)	ninditum	infinitive
 nind 	(I P)	ninditvā	absolutive
 nind 	(I P)	°nindya	absolutive
@@ -3656,7 +3656,7 @@ pac 	(I PĀ)	pācyate	causative passive
 pac 	(I PĀ)	pacyate	present passive
 pac 	(I PĀ)	pakṣyate	future
 pac 	(I PĀ)	pakṣyati	future
-pac 	(I PĀ)	paktā	perfectT
+pac 	(I PĀ)	paktā	periphrastiv future
 pac 	(I PĀ)	paktavya	gerundive
 pac 	(I PĀ)	paktvā	absolutive
 pac 	(I PĀ)	pakva	past participle
@@ -3981,7 +3981,7 @@ rah 	(X PĀ)	rahayati	indicative
 rah 	(X PĀ)	rahita	past participle
 rah 	(X PĀ)	rahitum	infinitive
 rā 	(II P)	rāta	past participle
-rā 	(II P)	rātā	perfectT
+rā 	(II P)	rātā	periphrastiv future
 rā 	(II P)	rāti	indicative
 rāj 	(I PĀ)	rājate	indicative
 rāj 	(I PĀ)	rājati	indicative
@@ -4008,7 +4008,7 @@ rakṣ 	(I P)	rakṣati	indicative
 rakṣ 	(I P)	rakṣayati	causative indicative
 rakṣ 	(I P)	rakṣiṣyati	future
 rakṣ 	(I P)	rakṣita	past participle
-rakṣ 	(I P)	rakṣitā	perfectT
+rakṣ 	(I P)	rakṣitā	periphrastiv future
 rakṣ 	(I P)	rakṣitavya	gerundive
 rakṣ 	(I P)	rakṣitum	infinitive
 rakṣ 	(I P)	rakṣitvā	absolutive
@@ -4276,7 +4276,7 @@ sah 	(I Ā)	sahya	gerundive
 sah 	(I Ā)	sahyate	present passive
 sah 	(I Ā)	sakṣyati	future
 sah 	(I Ā)	soḍha	past participle
-sah 	(I Ā)	soḍhā	perfectT
+sah 	(I Ā)	soḍhā	periphrastiv future
 sah 	(I Ā)	soḍhavya	gerundive
 sah 	(I Ā)	soḍhum	infinitive
 sajjay 	(Denom.)	sajjayati	indicative
@@ -4529,7 +4529,7 @@ sidh  	(IV P)	sidhyati	indicative
 śī 	(II Ā)	śāyita	causative past participle
 śī 	(II Ā)	śayīta	optative
 śī 	(II Ā)	śayita	past participle
-śī 	(II Ā)	śayitā	perfectT
+śī 	(II Ā)	śayitā	periphrastiv future
 śī 	(II Ā)	śayitavya	gerundive
 śī 	(II Ā)	śayitum	infinitive
 śī 	(II Ā)	śayitvā	absolutive
@@ -4851,7 +4851,7 @@ sru 	(I P)	srāvya	causative gerundive
 śru 	(I P)	śṛṇvanti	indicative
 śru 	(I P)	śroṣyate	future
 śru 	(I P)	śroṣyati	future
-śru 	(I P)	śrotā	perfectT
+śru 	(I P)	śrotā	periphrastiv future
 śru 	(I P)	śrotavya	gerundive
 śru 	(I P)	śrotum	infinitive
 sru 	(I P)	sruta	past participle
@@ -4904,7 +4904,7 @@ sthā 	(I P)	sthāpayitavya	causative gerundive
 sthā 	(I P)	sthāpya	causative gerundive
 sthā 	(I P)	sthāpyate	causative passive
 sthā 	(I P)	sthāsyati	future
-sthā 	(I P)	sthātā	perfectT
+sthā 	(I P)	sthātā	periphrastiv future
 sthā 	(I P)	sthātavya	gerundive
 sthā 	(I P)	sthātum	infinitive
 sthā 	(I P)	°sthāya	absolutive
@@ -5179,7 +5179,7 @@ tan 	(VIII PĀ)	tatvā	absolutive
 tan 	(VIII PĀ)	°tatya	absolutive
 tan 	(VIII PĀ)	°tāya	absolutive
 tan 	(VIII PĀ)	tāyate	present passive
-tan 	(VIII PĀ)	tāyitā	perfectT
+tan 	(VIII PĀ)	tāyitā	periphrastiv future
 tan 	(VIII PĀ)	tene	perfect
 tan 	(VIII PĀ)	tenuḥ	perfect
 tapasy 	(Denom.)	tapasyati	indicative
@@ -5193,7 +5193,7 @@ tap 	(I P, IV Ā)	tapita	past participle
 tap 	(I P, IV Ā)	tapsyate	future
 tap 	(I P, IV Ā)	tapsyati	future
 tap 	(I P, IV Ā)	tapta	past participle
-tap 	(I P, IV Ā)	taptā	perfectT
+tap 	(I P, IV Ā)	taptā	periphrastiv future
 tap 	(I P, IV Ā)	taptavya	gerundive
 tap 	(I P, IV Ā)	taptum	infinitive
 tap 	(I P, IV Ā)	taptvā	absolutive
@@ -5444,7 +5444,7 @@ vac 	(II P)	vacyāt	optative
 vac 	(II P)	vagdhi	imperative
 vac 	(II P)	vakṣyate	future
 vac 	(II P)	vakṣyati	future
-vac 	(II P)	vaktā	perfectT
+vac 	(II P)	vaktā	periphrastiv future
 vac 	(II P)	vaktavya	gerundive
 vac 	(II P)	vakti	indicative
 vac 	(II P)	vaktu	imperative
@@ -5706,7 +5706,7 @@ vid  	(II P)	vedyate	causative passive
 vid  	(II P)	vetsi	indicative
 vid  	(II P)	vetsyate	future
 vid  	(II P)	vetsyati	future
-vid  	(II P)	vettā	perfectT
+vid  	(II P)	vettā	periphrastiv future
 vid  	(II P)	vettha	present / perfect
 vid  	(II P)	vetti	indicative
 vid  	(II P)	vettu	imperative
@@ -5868,7 +5868,7 @@ vṛt 	(I Ā)	vartayati	causative indicative
 vṛt 	(I Ā)	°vartayitavya	causative gerundive
 vṛt 	(I Ā)	vartiṣyate	future
 vṛt 	(I Ā)	vartiṣyati	future
-vṛt 	(I Ā)	vartitā	perfectT
+vṛt 	(I Ā)	vartitā	periphrastiv future
 vṛt 	(I Ā)	vartitavya	gerundive
 vṛt 	(I Ā)	vartitum	infinitive
 vṛt 	(I Ā)	vartitvā	absolutive
@@ -5970,7 +5970,7 @@ yā 	(II P)	yāpayati	causative indicative
 yā 	(II P)	yāsyate	future
 yā 	(II P)	yāsyati	future
 yā 	(II P)	yāta	past participle
-yā 	(II P)	yātā	perfectT
+yā 	(II P)	yātā	periphrastiv future
 yā 	(II P)	yātavya	gerundive
 yā 	(II P)	yāti	indicative
 yā 	(II P)	yātu	imperative
@@ -6052,7 +6052,7 @@ yat 	(I Ā)	yatyate	present passive
 yudh 	(IV Ā)	ayodhīt	aorist
 yudh 	(IV Ā)	ayuddha	aorist
 yudh 	(IV Ā)	mā yotsīḥ	injunctive
-yudh 	(IV Ā)	yoddhā	perfectT
+yudh 	(IV Ā)	yoddhā	periphrastiv future
 yudh 	(IV Ā)	yoddhavya	gerundive
 yudh 	(IV Ā)	yoddhum	infinitive
 yudh 	(IV Ā)	yodhanīya	gerundive
