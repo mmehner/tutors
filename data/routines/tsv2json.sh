@@ -6,7 +6,6 @@ iast2nagari() {
     sed -e 's_[kgṅcjñṭḍṇtdnpbmyrlvśṣsh]h\?_&्_g' \
 	-e 's_् *ai_ै_g' \
 	-e 's_् *au_ौ_g' \
-	-e 's_् *a__g' \
 	-e 's_् *ā_ा_g' \
 	-e 's_् *i_ि_g' \
 	-e 's_् *ī_ी_g' \
@@ -31,10 +30,11 @@ iast2nagari() {
 	-e 's_dh_ध_g' \
 	-e 's_ph_फ_g' \
 	-e 's_bh_भ_g' \
+	-e 's_् *a__g' \
 	-e 'y_kgṅcjñṭḍṇtdnpbmyrlvśṣsh_कगङचजञटडणतदनपबमयरलवशषसह_' \
-	-e 'y_aāiīuūṛṝḷeo_अआइईउऊऋलृएओ_' \
 	-e 's_ai_ऐ_g' \
 	-e 's_au_औ_g' \
+	-e 'y_aāiīuūṛṝḷeo_अआइईउऊऋलृएओ_' \
 	-e 's_[\./|][\./|]_॥_g' \
 	-e 's_[\./|]_।_g'
 }
