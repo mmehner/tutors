@@ -574,12 +574,13 @@ ul li{
     border-bottom-right-radius: 30px;
 }
 
-a {
+a.chat {
     text-decoration: underline;
     color: #313131;
 }
 
-a:link { color: #313131; }
-a:visited { color:  #313131; }
-a:hover { color: #313131; }
-a:active { color: #313131; }
+
+a.chat:link { color: #313131; }
+a.chat:visited { color:  #313131; }
+a.chat:hover { color: #313131; }
+a.chat:active { color: #313131; }

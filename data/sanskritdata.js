@@ -24,7 +24,7 @@ const dia = {
     "correction" : " इति समीचीनम्। ",
     "script_intro" : '<span class="ltn">Transcribe the following syllables.<br/>To display the transliteration table type</span> लिपि <span class="ltn"><i>lipi</i>,<br/> to change the Nāgarī font type </span> मुद्राक्षर <span class="ltn"><i>mudrAkSara</i>.</span>',
     "vocab_intro" : '<span class="ltn">Choose a chapter and translate the prompt from Sanskrit (stem form) to English or vice versa.</span>',
-    "verb_intro" : '<span class="ltn">The following verb forms are taken from the <a href="https://www.iet-verlag.de/ser_ext.html">Sankrit-Vademecum</a>.<br/>Step 1: Identify the correct verbal root or denominal base of a given verb form.<br/> Step 2: Choose the correct designation of the form.</span>',
+    "verb_intro" : '<span class="ltn">The following verb forms are taken from the <a class="chat" href="https://www.iet-verlag.de/ser_ext.html">Sankrit-Vademecum</a>.<br/>Step 1: Identify the correct verbal root or denominal base of a given verb form.<br/> Step 2: Choose the correct designation of the form.</span>',
 };
 
 const table = '<table class="deva-large" style="text-align: center; vertical-align: middle;">' +
