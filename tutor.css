@@ -573,3 +573,13 @@ ul li{
 .me:last-of-type {
     border-bottom-right-radius: 30px;
 }
+
+a {
+    text-decoration: underline;
+    color: #313131;
+}
+
+a:link { color: #313131; }
+a:visited { color:  #313131; }
+a:hover { color: #313131; }
+a:active { color: #313131; }
