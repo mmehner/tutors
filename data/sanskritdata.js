@@ -4,7 +4,7 @@ const script = "deva";
 const fonts = [ "Adishila", "AdishilaDev", "AdishilaSan", "AdishilaSamskrta", "Aksharyogini", "Annapurna", "Chandas", "MurtySanskrit", "Nakula", "Samyak", "Sanskrit2003", "Shobhika", "Uttara", ];
 const defaultfont = "Shobhika"
 
-const modes = [ "script", "vocabulary", "verb forms" ]
+const modes = [ "script", "Grundkurs Vokabeln", "verb forms" ]
 
 const field = {
     "question" : 0,
@@ -23,7 +23,7 @@ const dia = {
     "incorrect" : "सदोषं लिखितम्।<br/>",
     "correction" : " इति समीचीनम्। ",
     "script_intro" : '<span class="ltn">Transcribe the following syllables.<br/>To display the transliteration table type</span> लिपि <span class="ltn"><i>lipi</i>,<br/> to change the Nāgarī font type </span> मुद्राक्षर <span class="ltn"><i>mudrAkSara</i>.</span>',
-    "vocab_intro" : '<span class="ltn">Choose a chapter and translate the prompt from Sanskrit (stem form) to English or vice versa.</span>',
+    "vocab_intro" : '<span class="ltn">Wählen Sie eine Lektion und übersetzen Sie:</span>',
     "verb_intro" : '<span class="ltn">The following verb forms are taken from the <a class="chat" href="https://www.iet-verlag.de/ser_ext.html">Sanskrit-Vademecum</a>.<br/>Step 1: Identify the correct verbal root or denominal base of a given verb form.<br/> Step 2: Choose the correct designation of the form.</span>',
 };
 
@@ -2046,10 +2046,50 @@ const scriptdata = [["ॐ", "oM"],
 		    ["ऽ", "'"]];
 
 const vocabdata = {
-    "chapter 1" : [["बाल", "bAla", "boy"],
-		   ["कन्या", "kanyA", "girl"]],
-    "chapter 2" : [["नृप", "nRpa", "king"],
-		   ["दास", "dAsa", "slave"]],
+    "Lektion 1" : [["अश्वः","azvaH","Pferd"],
+		   ["कन्या","kanyA","Mädchen"],
+		   ["कुमारः","kumAraH","Prinz, Jüngling"],
+		   ["गजः","gajaH","Elefant"],
+		   ["गृहं","gRhaM","Haus"],
+		   ["ग्रामः","grAmaH","Dorf"],
+		   ["चतुर","catura","schlau, gewitzt"],
+		   ["दूर","dUra","weit entfernt"],
+		   ["धूर्तः","dhUrtaH","Schurke"],
+		   ["नगरं","nagaraM","Stadt"],
+		   ["नरः","naraH","Mann"],
+		   ["नृपः","nRpaH","König"],
+		   ["पण्डितः","paNDitaH","Gelehrter"],
+		   ["प्रासादः","prAsAdaH","Palast"],
+		   ["फलम्","phalam","Frucht"],
+		   ["बालः","bAlaH","Kind"],
+		   ["भव्य","bhavya","gut, vorzüglich; hübsch"],
+		   ["मित्रं","mitraM","Freund"],
+		   ["मूर्ख","mUrkha","dumm, einfältig"],
+		   ["रत्नं","ratnaM","Juwel, Edelstein"],
+		   ["सुन्दर","sundara","schön"],
+		   ["वृक्षः","vRkSaH","Baum"],],
+    "Lektion 2" : [["कथा","kathA","Erzählung, Geschichte"],
+		   ["मन्द","manda","langsam, schlaff; sacht"],
+		   ["शीघ्र","zIghra","rasch"],
+		   ["सत्य","satya","wahr"],
+		   ["साहस","sAhasa","forsch, kühn"],
+		   ["स्थिर","sthira","fest"],
+		   ["अव-गम्","ava-gam","verstehen"],
+		   ["आ-गम्","A-gam","kommen"],
+		   ["गम्","gam","gehen"],
+		   ["चर्","car","gehen, laufen"],
+		   ["जि","ji","siegen"],
+		   ["दह्","dah","brennen, verbrennen"],
+		   ["दृश्","dRz","sehen, erblicken"],
+		   ["नृत्","nRt","tanzen"],
+		   ["प्र-विश्","pra-viz","betreten"],
+		   ["बुध्","budh","erwachen"],
+		   ["भू","bhU","sein, werden"],
+		   ["वद्","vad","sagen"],
+		   ["वि-मुच्","vi-muc","freilassen"],
+		   ["सिच्","sic","benetzen, besprenkeln"],
+		   ["स्था","sthA","stehenbleiben; verweilen"],
+		   ["स्पृश्","spRz","berühren"]],
 };
 
 const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II  Ā)","adhi-i\|adhI","imperative"],
@@ -8172,9 +8212,9 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 
 // mode map must come after data 
 const mode_map = { // mode : [ abstract-mode, chap, data-set, intro ]
-    "script"     : [ "script", false, scriptdata, "script_intro" ],
-    "vocabulary" : [ "vocab",  true,  vocabdata,  "vocab_intro"  ],
-    "verb forms" : [ "root",   false, verbdata,   "verb_intro"   ],
+    "script"             : [ "oneway", false, scriptdata, "script_intro" ],
+    "Grundkurs Vokabeln" : [ "twoway",  true, vocabdata,  "vocab_intro"  ],
+    "verb forms"         : [ "root",   false, verbdata,   "verb_intro"   ],
 }
 
 // methods

@@ -1,6 +1,5 @@
 // global switches
 var playing = false;
-var inverted = false;
 var transliterating = true;
 var chap = false;
 
@@ -86,14 +85,21 @@ function exercise(data, index) {
     if ( index+1 <= data.length ) {
 	
 	switch(curmode){
-	case "script": // i.e. one-way
-	    exercise_script(data,index);
+	case "oneway": // i.e. one-way
+	    exercise_oneway(data,index);
 	    break;
-	case "vocab": // i.e. two-way
-	    exercise_vocab(data,index);
+	case "twoway": // i.e. two-way
+	    exercise_twoway(data,index);
 	    break;
 	case "root": // i.e. step-by-step
 	    exercise_root(curdata,index); 
+	    break;
+	case "c-oneway": // i.e. choice one-way
+	    exercise_oneway(data,index);
+
+	    let arr = shuffleArray(create_choice_array(4,data[index],2));
+	  
+	    addButtons(arr,process);
 	    break;
 	};
 	
@@ -104,16 +110,16 @@ function exercise(data, index) {
     }
 }
 
-function exercise_script(array, index) {
+function exercise_oneway(array, index) {
     transliterating = true;
     addReplyL(array[index][0]);
 }
 
-function exercise_vocab(array, index) {
+function exercise_twoway(array, index) {
     let invert = Math.random() < 0.5; //randomly invert
     if (invert) {
 	transliterating = true;
-	addReplyL(array[index][2]);
+	addReply('<span class="ltn">' + array[index][2] + '</span>');
     } else {
 	transliterating = false;
 	addReplyL(array[index][0]);
@@ -125,10 +131,10 @@ function exercise_root(array, index) {
     addReplyL(array[index][0]);
 }
 
+
 function process(input) {
-    
     display_input(input);
-    
+        
     if ( commands.includes(input) ) {
 	follow_command(commands.indexOf(input));
     } else if (playing) {
@@ -143,18 +149,19 @@ function set_question_answer(input) {
     let cur =  curdata[round-1];
     let question = ""
     let answer = ""
+    let multi = false
 
     // set variables according to mode
     switch(curmode){
 	
-    case "script":
+    case "oneway":
 	question = cur[0];
 	answer = cur[1];
 
-	compare_with_answer(input,question,answer)
+	compare_with_answer(input,question,answer,checkmulti(answer));
 	break;
 	
-    case "vocab":
+    case "twoway":
 	if (transliterating) {
 	    question = cur[2] + " " + cur[0];
 	    answer = cur[1];
@@ -162,32 +169,24 @@ function set_question_answer(input) {
 	    question = cur[0];
 	    answer = cur[2];
 	};
-
-	compare_with_answer(input,question,answer)
+	
+	compare_with_answer(input,question,answer,checkmulti(answer));
+	
 	break;
 	
     case "root":
 	question = cur[0] + " – " + cur[1];
 	answer = cur[2]
 
-	let regexp = false 
-	// check for regexp
-	if ( answer.match(/\\|/g) !== null ) { regexp = true }
+	// check for multiple correct answers
+	multi = checkmulti(answer);
 
-	if ( (regexp && input.match(answer)) || (!regexp && input === answer)) {
+	if ( (multi && input.match(answer)) || (!multi && input === answer)) {
 	    answer = input + " " + cur[3];
 
-	    let arr = [cur[3]]
-	    let i = curdata.length -1
-
-	    while (arr.length < 4) {
-		let n = Math.floor(Math.random() * (i + 1));
-		if (! arr.includes(curdata[n][3])) {
-		    arr.push(curdata[n][3]);
-		}
-	    }
-	    
-	    addButtons(shuffleArray(arr),add_button_value,[input,question,answer]);
+	    let arr = shuffleArray(create_choice_array(4,cur,3));
+	  
+	    addButtons(arr,add_button_value,[input,question,answer]);
 	}
 	else {
 	    answer = translit_bracket(cur[2]) + " " + cur[3];
@@ -195,15 +194,48 @@ function set_question_answer(input) {
 	    compare_with_answer(input, question, answer)
 	    transliterating=true
 	}
-    }
+	break;
+
+    case "c-oneway":
+	question = cur[0] + " " + cur[1];
+	answer = cur[2]
+
+	compare_with_answer(input,question,answer,false,true);
+	
+	break;
+    };
 
 }
 
-function compare_with_answer(input, question, answer) {
-    
-    if  ( input.match(/[^a-zA-Z0-9' ]/g) !== null ) {
+function checkmulti(answer) {
+    if ( transliterating && ( answer.match("\\|") !== null ) ) {
+	return true;
+    } else if ( !transliterating && ( answer.match(/[,;]/g) !== null ) ) {
+	return true;
+    } else {
+	return false;
+    }
+}
+
+function create_choice_array(number,curset,idx) {
+    let arr = [curset[idx]]
+    let i = curdata.length -1
+
+    while (arr.length < number) {
+	let n = Math.floor(Math.random() * (i + 1));
+	if (! arr.includes(curdata[n][idx])) {
+	    arr.push(curdata[n][idx]);
+	}
+    }
+
+    return arr;
+}
+
+function compare_with_answer(input, question, answer, multi = false, buttoninput = false) {
+
+    if  ( !buttoninput && input.match(/[^-a-zA-ZÖÜÄöüäß' ]/g) !== null ) {
 	addReply(dia.tryagain);
-    } else if ( input === answer ) {
+    } else if ( (multi && answer.match(input)) || (!multi && input === answer)) { // right answer
 	score += 1;
 	addReplyG(dia.correct + quota());
 	round += 1;
@@ -263,6 +295,7 @@ function addInput(input) {
     const userDiv = document.createElement("li");
     const attUser = document.createAttribute("class");
     attUser.value = "me ltn";
+    
     userDiv.setAttributeNode(attUser);
     userDiv.innerHTML = `${input}`;
     mainDiv.appendChild(userDiv);
@@ -379,7 +412,7 @@ function changemode(mode){
 }
 
 function choosechapter(chapter, data) {
-    if ( chapter = "all" ) {
+    if ( chapter == "all" ) {
 
 	let all = []
 	let chapters_a = Object.keys(data);
@@ -411,7 +444,6 @@ function add_button_value(str,array) {
     compare_with_answer(input,question,answer);
 }
 
-
 function quota() {
     let out=""
     out = num2scriptstr(score) + "/" + num2scriptstr(round);
@@ -433,20 +465,5 @@ function num2mongolstr(n) {
     nstr = nstr.replace(/7/g, "᠗");
     nstr = nstr.replace(/8/g, "᠘");
     nstr = nstr.replace(/9/g, "᠙");
-    return nstr;
-}
-
-function num2bodstr(n) {
-    let nstr = n.toString(10);
-    nstr = nstr.replace(/0/g, "༠");
-    nstr = nstr.replace(/1/g, "༡");
-    nstr = nstr.replace(/2/g, "༢");
-    nstr = nstr.replace(/3/g, "༣");
-    nstr = nstr.replace(/4/g, "༤");
-    nstr = nstr.replace(/5/g, "༥");
-    nstr = nstr.replace(/6/g, "༦");
-    nstr = nstr.replace(/7/g, "༧");
-    nstr = nstr.replace(/8/g, "༨");
-    nstr = nstr.replace(/9/g, "༩");
     return nstr;
 }
