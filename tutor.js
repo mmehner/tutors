@@ -2,6 +2,7 @@
 var playing = false;
 var transliterating = true;
 var chap = false;
+var last_invert= false;
 
 // global variables
 var curfont = defaultfont
@@ -79,7 +80,7 @@ function mode_choice() {
     });
 }
 
-function exercise(data, index) {
+function exercise(data, index, random_invert=true) {
     playing = true;
 
     if ( index+1 <= data.length ) {
@@ -89,7 +90,7 @@ function exercise(data, index) {
 	    exercise_oneway(data,index);
 	    break;
 	case "twoway": // i.e. two-way
-	    exercise_twoway(data,index);
+	    exercise_twoway(data,index,random_invert);
 	    break;
 	case "root": // i.e. step-by-step
 	    exercise_root(curdata,index); 
@@ -115,8 +116,15 @@ function exercise_oneway(array, index) {
     addReplyL(array[index][0]);
 }
 
-function exercise_twoway(array, index) {
-    let invert = Math.random() < 0.5; //randomly invert
+function exercise_twoway(array, index, random_invert=true) {
+
+    let invert = last_invert
+    
+    if (random_invert) {
+	invert = Math.random() < 0.5; //randomly invert
+	last_invert = invert
+    }	
+
     if (invert) {
 	transliterating = true;
 	addReply('<span class="ltn">' + array[index][2] + '</span>');
@@ -382,7 +390,7 @@ function addButtons(buttonArray,cmd,data = false) {
 
 function repeat_if_playing() {
     if (playing) {
-	exercise(curdata, round-1)
+	exercise(curdata, round-1,false)
     } else {
 	mode_choice();
     }
