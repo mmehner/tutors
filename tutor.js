@@ -2,12 +2,16 @@
 var playing = false;
 var transliterating = true;
 var chap = false;
-var last_invert= false;
+var last_invert = false;
+
+// global const
+const repfailstr = "Repeat failed questions";
 
 // global variables
-var curfont = defaultfont
-var curmode
-var curdata
+var curfont = defaultfont;
+var curmode;
+var curdata;
+var faildata = [];
 
 // counters
 var round = 1;
@@ -18,22 +22,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputField = document.getElementById("input");
     introduce();
 
-    inputField.addEventListener("keydown", function(e) {
+    inputField.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
-	    let input = inputField.value;
-	    inputField.value = "";
-	    let text = input.replace(/^\s+/g, "").replace(/\s+$/g, "").replace(/\s+/g, " ");
-	    
-	    if ( text == "" ) {
-		addReply(dia.help);
-		repeat_if_playing();
-	    } else { 
-		process(text);
-		inputField.scrollIntoView();
-	    }
-	}
+            let input = inputField.value;
+            inputField.value = "";
+            let text = input
+                .replace(/^\s+/g, "")
+                .replace(/\s+$/g, "")
+                .replace(/\s+/g, " ");
+
+            if (text == "") {
+                addReply(dia.help);
+                repeat_if_playing();
+            } else {
+                process(text);
+                inputField.scrollIntoView();
+            }
+        }
     });
-    
 });
 
 function resetroundscore() {
@@ -41,73 +47,75 @@ function resetroundscore() {
     score = 0;
 }
 
+function resetFaildata() {
+    faildata = [];
+    console.dir(faildata);
+}
+
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
-	
-	// Generate random number
-	var j = Math.floor(Math.random() * (i + 1));
-        
-	var temp = array[i];
-	array[i] = array[j];
-	array[j] = temp;
+        // Generate random number
+        var j = Math.floor(Math.random() * (i + 1));
+
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
-    
+
     return array;
 }
 
 function introduce() {
-    let sleep = ms => {  
-	return new Promise(resolve => setTimeout(resolve, ms));  
+    let sleep = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
     };
-    
+
     addReply(dia.intro);
     sleep(500).then(() => {
-	addReply(dia.help);
-	sleep(500).then(() => {
-	    mode_choice();
-	});
+        addReply(dia.help);
+        sleep(500).then(() => {
+            mode_choice();
+        });
     });
 }
 
 function mode_choice() {
-    let sleep = ms => {  
-	return new Promise(resolve => setTimeout(resolve, ms));  
-    };
-    
     addReply(dia.choice);
-    sleep(500).then(() => {
-	addButtons(modes, changemode);
-    });
+
+    if (faildata.length == 0) {
+        addButtons(modes, changemode);
+        return;
+    }
+
+    addButtons([repfailstr].concat(modes), changemode);
 }
 
-function exercise(data, index, random_invert=true) {
+function exercise(data, index, random_invert = true) {
     playing = true;
 
-    if ( index+1 <= data.length ) {
-	
-	switch(curmode){
-	case "oneway": // i.e. one-way
-	    exercise_oneway(data,index);
-	    break;
-	case "twoway": // i.e. two-way
-	    exercise_twoway(data,index,random_invert);
-	    break;
-	case "root": // i.e. step-by-step
-	    exercise_root(curdata,index); 
-	    break;
-	case "c-oneway": // i.e. choice one-way
-	    exercise_oneway(data,index);
+    if (index + 1 <= data.length) {
+        switch (curmode) {
+        case "oneway": // i.e. one-way
+            exercise_oneway(data, index);
+            break;
+        case "twoway": // i.e. two-way
+            exercise_twoway(data, index, random_invert);
+            break;
+        case "root": // i.e. step-by-step
+            exercise_root(curdata, index);
+            break;
+        case "c-oneway": // i.e. choice one-way
+            exercise_oneway(data, index);
+            
+            let arr = shuffleArray(create_choice_array(4, data[index], 2));
 
-	    let arr = shuffleArray(create_choice_array(4,data[index],2));
-	  
-	    addButtons(arr,process);
-	    break;
-	};
-	
+            addButtons(arr, process);
+            break;
+        }
     } else {
-	playing = false
-	addReplyG(dia.empty);
-	mode_choice();
+        playing = false;
+        addReplyG(dia.empty);
+        mode_choice();
     }
 }
 
@@ -116,21 +124,20 @@ function exercise_oneway(array, index) {
     addReplyL(array[index][0]);
 }
 
-function exercise_twoway(array, index, random_invert=true) {
+function exercise_twoway(array, index, random_invert = true) {
+    let invert = last_invert;
 
-    let invert = last_invert
-    
     if (random_invert) {
-	invert = Math.random() < 0.5; //randomly invert
-	last_invert = invert
-    }	
+        invert = Math.random() < 0.5; //randomly invert
+        last_invert = invert;
+    }
 
     if (invert) {
-	transliterating = true;
-	addReply('<span class="ltn">' + array[index][2] + '</span>');
+        transliterating = true;
+        addReply('<span class="ltn">' + array[index][2] + "</span>");
     } else {
-	transliterating = false;
-	addReplyL(array[index][0]);
+        transliterating = false;
+        addReplyL(array[index][0]);
     }
 }
 
@@ -139,121 +146,135 @@ function exercise_root(array, index) {
     addReplyL(array[index][0]);
 }
 
-
 function process(input) {
     display_input(input);
-        
-    if ( commands.includes(input) ) {
-	follow_command(commands.indexOf(input));
+
+    if (commands.includes(input)) {
+        follow_command(commands.indexOf(input));
     } else if (playing) {
-	set_question_answer(input);
+        set_question_answer(input);
     } else {
-	mode_choice();
+        mode_choice();
     }
 }
 
 function set_question_answer(input) {
-
-    let cur =  curdata[round-1];
-    let question = ""
-    let answer = ""
-    let multi = false
+    let cur = curdata[round - 1];
+    let question = "";
+    let pre_answer = "";
+    let answer = "";
+    let multi = false;
 
     // set variables according to mode
-    switch(curmode){
-	
+    switch (curmode) {
     case "oneway":
-	question = cur[0];
-	answer = cur[1];
+        question = cur[0];
+        answer = cur[1];
 
-	compare_with_answer(input,question,answer,checkmulti(answer));
-	break;
-	
+        compare_with_answer(input, question, answer, checkmulti(answer));
+        break;
+        
     case "twoway":
-	if (transliterating) {
-	    question = cur[2] + " " + cur[0];
-	    answer = cur[1];
-	} else {
-	    question = cur[0];
-	    answer = cur[2];
-	};
-	
-	compare_with_answer(input,question,answer,checkmulti(answer));
-	
-	break;
-	
+        if (transliterating) {
+            question = cur[2] + " " + cur[0];
+            answer = cur[1];
+        } else {
+            question = cur[0];
+            answer = cur[2];
+        }
+
+        compare_with_answer(input, question, answer, checkmulti(answer));
+
+        break;
+
     case "root":
-	question = cur[0] + " – " + cur[1];
-	answer = cur[2]
+        question = cur[0] + " – " + cur[1];
+        answer = cur[2];
 
-	// check for multiple correct answers
-	multi = checkmulti(answer);
+        // check for multiple correct answers
+        multi = checkmulti(answer);
 
-	if ( (multi && input.match(answer)) || (!multi && input === answer)) {
-	    answer = input + " " + cur[3];
+        if ((multi && input.match(answer)) || (!multi && input === answer)) {
+            answer = input + " " + cur[3];
 
-	    let arr = shuffleArray(create_choice_array(4,cur,3));
-	  
-	    addButtons(arr,add_button_value,[input,question,answer]);
-	}
-	else {
-	    answer = translit_bracket(cur[2]) + " " + cur[3];
-	    transliterating=false
-	    compare_with_answer(input, question, answer)
-	    transliterating=true
-	}
-	break;
+            let arr = shuffleArray(create_choice_array(4, cur, 3));
+
+            addButtons(arr, add_button_value, [input, question, answer]);
+        } else {
+            answer = translit_bracket(cur[2]) + " " + cur[3];
+            transliterating = false;
+            compare_with_answer(input, question, answer);
+            transliterating = true;
+        }
+        break;
 
     case "c-oneway":
-	question = cur[0] + " " + cur[1];
-	answer = cur[2]
+        question = cur[0] + " " + cur[1];
+        answer = cur[2];
 
-	compare_with_answer(input,question,answer,false,true);
-	
-	break;
-    };
+        compare_with_answer(input, question, answer, false, true);
 
-}
-
-function checkmulti(answer) {
-    if ( transliterating && ( answer.match("\\|") !== null ) ) {
-	return true;
-    } else if ( !transliterating && ( answer.match(/[,;]/g) !== null ) ) {
-	return true;
-    } else {
-	return false;
+        break;
     }
 }
 
-function create_choice_array(number,curset,idx) {
-    let arr = [curset[idx]]
-    let i = curdata.length -1
+function checkmulti(answer) {
+    if (transliterating && answer.match("\\|") !== null) {
+        return true;
+    } else if (!transliterating && answer.match(/[,;]/g) !== null) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function create_choice_array(number, curset, idx) {
+    let arr = [curset[idx]];
+    let i = curdata.length - 1;
 
     while (arr.length < number) {
-	let n = Math.floor(Math.random() * (i + 1));
-	if (! arr.includes(curdata[n][idx])) {
-	    arr.push(curdata[n][idx]);
-	}
+        let n = Math.floor(Math.random() * (i + 1));
+        if (!arr.includes(curdata[n][idx])) {
+            arr.push(curdata[n][idx]);
+        }
     }
 
     return arr;
 }
 
-function compare_with_answer(input, question, answer, multi = false, buttoninput = false) {
-
-    if  ( !buttoninput && input.match(/[^-a-zA-ZÖÜÄöüäß' ]/g) !== null ) {
-	addReply(dia.tryagain);
-    } else if ( (multi && answer.match(input)) || (!multi && input === answer)) { // right answer
-	score += 1;
-	addReplyG(dia.correct + quota());
-	round += 1;
-    } else { // wrong answer
-	let reply = dia.incorrect + " <b>" + question + '<span class="ltn"> ' + translit_bracket(answer)  + "</span></b> " + dia.correction + quota();
-	addReplyR(reply);
-	round += 1;
+function compare_with_answer(input,
+                             question,
+                             answer,
+                             multi = false,
+                             buttoninput = false,
+                             pre_answer = ""){
+    if (!buttoninput && input.match(/[^-a-zA-ZÖÜÄöüäß' ]/g) !== null) {
+        addReply(dia.tryagain);
+    } else if ((multi && answer.match(input)) || (!multi && input === answer)) {
+        // right answer
+        score += 1;
+        addReplyG(dia.correct + quota());
+        round += 1;
+    } else {
+        // wrong answer
+        let reply =
+            dia.incorrect +
+            " <b>" +
+            question +
+            '<span class="ltn">' +
+            pre_answer + " " +
+            translit_bracket(answer) +
+            "</span></b> " +
+            dia.correction +
+            quota();
+        if (curmode != "c-oneway" && curmode != "root") {
+            faildata.push(curdata[round -1]);
+            console.dir(faildata); }
+        addReplyR(reply);
+        round += 1;
     }
 
-    exercise(curdata, round-1);
+    exercise(curdata, round - 1);
 }
 
 function display_input(input) {
@@ -261,95 +282,93 @@ function display_input(input) {
 }
 
 function follow_command(index) {
-    switch(index) {
+    switch (index) {
     case 0: // help
-	addReply(dia.help);
-	repeat_if_playing();
-	break;
+        addReply(dia.help);
+        repeat_if_playing();
+        break;
     case 1: // script table
-	addReply(table);
-	repeat_if_playing();
-	break;
+        addReply(table);
+        repeat_if_playing();
+        break;
     case 2: // change font
-	addButtons(fonts,changefont);
-	repeat_if_playing();
-	break;
+        addButtons(fonts, changefont);
+        repeat_if_playing();
+        break;
     case 3: // change mode
-	playing = false;
-	addButtons(modes,changemode)
-	break;
+        playing = false;
+        mode_choice();
+        break;
     }
 }
 
 function translit_bracket(input) {
     let out = input;
-    
-    if ( transliterating ) {
-	
-	if ( input !== ltn2transcript(input) ) {
-	    out = ltn2transcript(input) + " [" + input + "]";
-	}
-	
-	return out;
+
+    if (transliterating) {
+        if (input !== ltn2transcript(input)) {
+            out = ltn2transcript(input) + " [" + input + "]";
+        }
+
+        return out;
     } else {
-	return out;
+        return out;
     }
-    
 }
 
 function addInput(input) {
     const mainDiv = document.getElementById("chat");
-    
+
     const userDiv = document.createElement("li");
     const attUser = document.createAttribute("class");
     attUser.value = "me ltn";
-    
+
     userDiv.setAttributeNode(attUser);
     userDiv.innerHTML = `${input}`;
     mainDiv.appendChild(userDiv);
 }
 
 function addReplyG(reply) {
-    addReply(reply,"green")
+    addReply(reply, "green");
 }
 
 function addReplyR(reply) {
-    addReply(reply,"red")
+    addReply(reply, "red");
 }
 
 function addReplyL(reply) {
-    addReply(reply, script + "-large")
+    addReply(reply, script + "-large");
 }
 
 function addReply(reply, cl = "") {
     const inputField = document.getElementById("input");
-    
-    let sleep = ms => {  
-	return new Promise(resolve => setTimeout(resolve, ms));  
+
+    let sleep = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
     };
-    
+
     const mainDiv = document.getElementById("chat");
     const botDiv = document.createElement("li");
     const botDivAtt = document.createAttribute("class");
-    
+
     botDivAtt.value = "bot " + " " + script + " " + curfont + " " + cl;
     botDiv.setAttributeNode(botDivAtt);
     botDiv.innerHTML = `${reply}`;
-    
+
     sleep(500).then(() => {
-	mainDiv.appendChild(botDiv);
-	inputField.scrollIntoView();
+        mainDiv.appendChild(botDiv);
+        inputField.scrollIntoView();
     });
 }
 
-function addButtons(buttonArray,cmd,data = false) {
+function addButtons(buttonArray, cmd, data = false) {
     const inputField = document.getElementById("input");
     const id = buttonNo.toString();
-    
-    let sleep = ms => {  
-	return new Promise(resolve => setTimeout(resolve, ms));  
+
+    let sleep = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
     };
-    
+
     const mainDiv = document.getElementById("chat");
     const botDiv = document.createElement("li");
     const botDivId = document.createAttribute("id");
@@ -360,104 +379,110 @@ function addButtons(buttonArray,cmd,data = false) {
     botDiv.setAttributeNode(botDivId);
 
     sleep(500).then(() => {
-	mainDiv.appendChild(botDiv);
+        mainDiv.appendChild(botDiv);
 
-	buttonArray.forEach(button => {
-	    const cbutton = document.createElement('button')
-	    const buttonAtt = document.createAttribute("class");
-	    buttonAtt.value = "button"
-	    const id = buttonNo.toString();
-	    buttonNo += 1;
-	    
-	    cbutton.innerText = button;
-	    cbutton.id = "button" + id;
-	    cbutton.setAttributeNode(buttonAtt);
-	
-	    cbutton.addEventListener('click', () => {
-		if ( ! data ) {
-		    cmd(button);
-		} else {
-		    cmd(button,data)
-		}
-	    })
-	    document.getElementById(botDivId.value).appendChild(cbutton);
-	    
-	});
-	
-	inputField.scrollIntoView();
+        buttonArray.forEach((button) => {
+            const cbutton = document.createElement("button");
+            const buttonAtt = document.createAttribute("class");
+            buttonAtt.value = "button";
+            const id = buttonNo.toString();
+            buttonNo += 1;
+
+            cbutton.innerText = button;
+            cbutton.id = "button" + id;
+            cbutton.setAttributeNode(buttonAtt);
+
+            cbutton.addEventListener("click", () => {
+                if (!data) {
+                    cmd(button);
+                } else {
+                    cmd(button, data);
+                }
+            });
+            document.getElementById(botDivId.value).appendChild(cbutton);
+        });
+
+        inputField.scrollIntoView();
     });
 }
 
 function repeat_if_playing() {
-    if (playing) {
-	exercise(curdata, round-1,false)
-    } else {
-	mode_choice();
+    if (!playing) {
+        mode_choice();
     }
+
+    exercise(curdata, round - 1, false);
 }
 
-function changefont(font){
+function changefont(font) {
     curfont = font;
     repeat_if_playing();
 }
 
-function changemode(mode){
-    curmode = mode_map[mode][0];
-    chap = mode_map[mode][1];
+function changemode(mode) {
     resetroundscore();
 
-    var curintro = mode_map[mode][3];
-    addReplyG(dia[curintro])
+    if (mode == repfailstr) {
+        curdata = shuffleArray(faildata);
+        resetFaildata();
+        exercise(curdata, round - 1);
+        return;
+    }
 
-    if ( chap ) {
-	var chapdata = mode_map[mode][2];
-	var chapters = ["all"].concat(Object.keys(chapdata));
-	addButtons(chapters, choosechapter, chapdata);
+    curmode = mode_map[mode][0];
+    chap = mode_map[mode][1];
+
+    var curintro = mode_map[mode][3];
+    addReplyG(dia[curintro]);
+
+    if (chap) {
+        var chapdata = mode_map[mode][2];
+        var chapters = ["all"].concat(Object.keys(chapdata));
+        addButtons(chapters, choosechapter, chapdata);
     } else {
-	curdata = shuffleArray(mode_map[mode][2]) 
-	exercise(curdata,round-1)
+        curdata = shuffleArray(mode_map[mode][2]);
+        resetFaildata();
+        exercise(curdata, round - 1);
     }
 }
 
 function choosechapter(chapter, data) {
-    if ( chapter == "all" ) {
+    if (chapter == "all") {
+        let all = [];
+        let chapters_a = Object.keys(data);
 
-	let all = []
-	let chapters_a = Object.keys(data);
-	
-	for (var i = chapters_a.length -1 ; i >= 0; i--) {    
-	    chap_a = data[chapters_a[i]]
-	    
-	    for (var j = chap_a.length -1 ; j >= 0; j--) {
-		all.push(chap_a[j])
-	    };
-	};
-	
-	curdata = shuffleArray(all)
+        for (var i = chapters_a.length - 1; i >= 0; i--) {
+            chap_a = data[chapters_a[i]];
+
+            for (var j = chap_a.length - 1; j >= 0; j--) {
+                all.push(chap_a[j]);
+            }
+        }
+
+        curdata = shuffleArray(all);
     } else {
-	curdata = shuffleArray(data[chapter]);
+        curdata = shuffleArray(data[chapter]);
     }
 
-   
-    exercise(curdata,round-1);
+    resetFaildata();
+    exercise(curdata, round - 1);
 }
 
-function add_button_value(str,array) {
+function add_button_value(str, array) {
     let display = translit_bracket(array[0]) + " " + str;
     let input = array[0] + " " + str;
     let question = array[1];
     let answer = array[2];
-    
+
     addInput(display);
-    compare_with_answer(input,question,answer);
+    compare_with_answer(input, question, answer);
 }
 
 function quota() {
-    let out=""
+    let out = "";
     out = num2scriptstr(score) + "/" + num2scriptstr(round);
-    return out
+    return out;
 }
-
 
 // remove later
 
