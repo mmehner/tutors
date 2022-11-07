@@ -161,7 +161,6 @@ function process(input) {
 function set_question_answer(input) {
     let cur = curdata[round - 1];
     let question = "";
-    let pre_answer = "";
     let answer = "";
     let multi = false;
 
@@ -228,6 +227,10 @@ function checkmulti(answer) {
     }
 }
 
+function strip_additions(str) {
+    return str.replace(/ *\[.*\] */g, "");
+}
+
 function create_choice_array(number, curset, idx) {
     let arr = [curset[idx]];
     let i = curdata.length - 1;
@@ -246,11 +249,10 @@ function compare_with_answer(input,
                              question,
                              answer,
                              multi = false,
-                             buttoninput = false,
-                             pre_answer = ""){
+                             buttoninput = false){
     if (!buttoninput && input.match(/[^-a-zA-ZÖÜÄöüäß' ]/g) !== null) {
         addReply(dia.tryagain);
-    } else if ((multi && answer.match(input)) || (!multi && input === answer)) {
+    } else if ((multi && answer.match(input)) || (!multi && input === strip_additions(answer))) {
         // right answer
         score += 1;
         addReplyG(dia.correct + quota());
@@ -261,13 +263,12 @@ function compare_with_answer(input,
             dia.incorrect +
             " <b>" +
             question +
-            '<span class="ltn">' +
-            pre_answer + " " +
+            '<span class="ltn"> ' +
             translit_bracket(answer) +
             "</span></b> " +
             dia.correction +
             quota();
-        if (curmode != "c-oneway" && curmode != "root") {
+        if (curmode !== "c-oneway" && curmode != "root") {
             faildata.push(curdata[round -1]);
             console.dir(faildata); }
         addReplyR(reply);

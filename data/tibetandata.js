@@ -1360,7 +1360,7 @@ const vocabdata = {
     ["སྟོན་མོ་", "ston mo", "feast"],
     ["ཐུགས་རྗེ་ཅན་", "thugs rje can", "compassionate"],
     ["དྲག་པ་", "drag pa", "noble"],
-    ["བདག་", "bdag", "I"],
+    ["བདག་", "bdag", "I [humble]"],
     ["བརྡ་", "brda", "sign"],
     ["སྤྲེའུ་ཕྲུག་", "spre'u phrug", "monkey-child"],
     ["མང་དུ་", "mang du", "many"],
