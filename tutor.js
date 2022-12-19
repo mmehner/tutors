@@ -228,7 +228,9 @@ function checkmulti(answer) {
 }
 
 function strip_additions(str) {
-    return str.replace(/ *\[.*\] */g, "");
+    let nstr = str.replace(/ *\[.*\] */g, "");
+    // console.log(nstr);
+    return nstr;
 }
 
 function create_choice_array(number, curset, idx) {

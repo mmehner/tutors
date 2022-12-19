@@ -2,16 +2,17 @@
 const script = "deva";
 
 const fonts = [ "Adishila", "AdishilaDev", "AdishilaSan", "AdishilaSamskrta", "Aksharyogini", "Annapurna", "Chandas", "MurtySanskrit", "Nakula", "Samyak", "Sanskrit2003", "Shobhika", "Uttara", ];
-const defaultfont = "Shobhika"
 
-const modes = [ "script", "Grundkurs Vokabeln", "verb forms" ]
+const defaultfont = "Shobhika";
+
+const modes = [ "script", "Grundkurs Vokabeln", "verb forms" ];
 
 const field = {
     "question" : 0,
     "answer" : 1,
 };
 
-const commands = [ "help", "lipi", "mudrAkSara", "abhyAsa" ]
+const commands = [ "help", "lipi", "mudrAkSara", "abhyAsa" ];
 
 const dia = {
     "intro" :  "स्वागतम्।",
