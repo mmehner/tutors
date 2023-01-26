@@ -1588,7 +1588,7 @@ const vocabdata = {
         ["འཛིན་ v2 བཟུང་ v3 གཟུང་ v4 ཟུངས་","'dzin","to take [dat as term]"],
         ["ཞལ་ཆེ་","zhal che","judgement"],
         ["གཞན་དུ་","gzhan du","differently"],
-        ["བཞུགས་","gzhugs [h]","to stay, abide"],
+        ["བཞུགས་","bzhugs [h]","to stay, abide"],
         ["བཞོན་པ་","gzhon pa","riding-beast"],
         ["འུ་བུ་ཅག་","'u bu cag","we"],
         ["ཡི་","yi","mind"],
@@ -1775,6 +1775,7 @@ const grunddata = [
   ["པོ་ཏ་ལ་", "Po-ta-la", "Potala-Palast"],
   ["སྲོང་བཙན་སྒམ་པོ་", "Srong-btsan-sgam-po", "Songtsen Gampo (ca. 605--650)"],
 ];
+
 // mode map must come after data
 const mode_map = {
   // mode : [ abstract-mode, chap, data-set, intro ]

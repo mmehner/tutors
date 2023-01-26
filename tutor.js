@@ -82,7 +82,7 @@ function introduce() {
 function mode_choice() {
     addReply(dia.choice);
 
-    if (faildata.length == 0) {
+    if (faildata.length == 0 || !faildata) {
         addButtons(modes, changemode);
         return;
     }
@@ -252,7 +252,7 @@ function compare_with_answer(input,
                              answer,
                              multi = false,
                              buttoninput = false){
-    if (!buttoninput && input.match(/[^-a-zA-ZÖÜÄöüäß' ]/g) !== null) {
+    if (!buttoninput && input.match(/[^-a-zA-ZÖÜÄöüäß';._\^\. ]/g) !== null) {
         addReply(dia.tryagain);
     } else if ((multi && answer.match(input)) || (!multi && input === strip_additions(answer))) {
         // right answer
@@ -296,7 +296,7 @@ function follow_command(index) {
         break;
     case 2: // change font
         addButtons(fonts, changefont);
-        repeat_if_playing();
+        // repeat_if_playing();
         break;
     case 3: // change mode
         playing = false;
@@ -412,6 +412,7 @@ function addButtons(buttonArray, cmd, data = false) {
 function repeat_if_playing() {
     if (!playing) {
         mode_choice();
+        return;
     }
 
     exercise(curdata, round - 1, false);

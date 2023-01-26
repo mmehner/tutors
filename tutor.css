@@ -5,18 +5,21 @@
     font-family: LinuxBiolinumORegular, sans-serif;
     font-size: 14px;
     lang: en;
+    direction: ltr;
 }
 
 .ltn-small{
     font-family: LinuxBiolinumORegular, sans-serif;
     font-size: 10px;
     lang: en;
+    direction: ltr;
 }
 
 .ltn-large{
     font-family: LinuxBiolinumORegular, sans-serif;
     font-size: 18px;
     lang: en;
+    direction: ltr;
 }
 
 /* devanagari */
@@ -369,27 +372,86 @@
 }
 
 
-/* alefba-ye farsi */
+/* farsi */
+
+.farsi{
+    font-size: 28px;
+    lang: fa;
+    direction: rtl;
+}
+
+.farsi-large{
+    font-size: 32px;
+    lang: fa;
+    direction: rtl;
+}
 
 @font-face {
     font-family: Lateef;
-    src: url(fonts/LateefGR-Regular.woff);
+    src: url(fonts/Lateef-Regular.woff2),
+	 url(fonts/Lateef-Regular.woff);
 }
 
-
-.alefba{
+@font-face {
     font-family: Lateef;
-    font-size: 17px;
-    lang: fa;
-    direction: rtl;
+    font-weight: bold;
+    src: url(fonts/Lateef-Bold.woff2),
+	 url(fonts/Lateef-Bold.woff);
 }
 
-.alefba-large{
+
+.Lateef{
     font-family: Lateef;
-    font-size: 22px;
-    lang: fa;
-    direction: rtl;
 }
+
+@font-face {
+    font-family: Awami;
+    src: url(fonts/Lateef-Regular.woff2),
+	 url(fonts/Lateef-Regular.woff);
+}
+
+@font-face {
+    font-family: Awami;
+    font-weight: bold;
+    src: url(fonts/Lateef-Bold.woff2),
+	 url(fonts/Lateef-Bold.woff);
+}
+
+
+.Awami{
+    font-family: Awami;
+}
+
+@font-face {
+    font-family: Awami;
+    src: url(fonts/AwamiNastaliq-Regular.woff),
+	 url(fonts/AwamiNastaliq-Regular.woff2);
+}
+
+@font-face {
+    font-family: Awami;
+    font-weight: bold;
+    src: url(fonts/AwamiNastaliq-Bold.woff),
+	 url(fonts/AwamiNastaliq-Bold.woff2);
+}
+
+.Scheherazade{
+    font-family: Scheherazade;
+}
+
+@font-face {
+    font-family: Scheherazade;
+    src: url(fonts/ScheherazadeNew-Regular.woff),
+	 url(fonts/ScheherazadeNew-Regular.woff2);
+}
+
+@font-face {
+    font-family: Scheherazade;
+    font-weight: bold;
+    src: url(fonts/ScheherazadeNew-Bold.woff),
+	 url(fonts/ScheherazadeNew-Bold.woff2);
+}
+
 
 /* mongol */
 .mongol{
