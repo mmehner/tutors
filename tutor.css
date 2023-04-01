@@ -375,13 +375,13 @@
 /* farsi */
 
 .farsi{
-    font-size: 28px;
+    font-size: 24px;
     lang: fa;
     direction: rtl;
 }
 
 .farsi-large{
-    font-size: 32px;
+    font-size: 28px;
     lang: fa;
     direction: rtl;
 }

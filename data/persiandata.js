@@ -1,9 +1,9 @@
 // constants
 const script = "farsi";
 
-const fonts = [ "Scheherazade", "Lateef", "Awami", ];
+const fonts = [  "Lateef", "Scheherazade", "Awami", ];
 
-const defaultfont = "Scheherazade";
+const defaultfont = "Lateef";
 
 const modes = [ "script", "Grundwortschatz", ];
 
@@ -154,7 +154,7 @@ const scriptdata = [
 
 const grunddata = [
     ["آب", "Ab", "Wasser"],
-    ["بابا" ,"bAbA", "Vater"],
+    ["بابا", "bAbA", "Vater"],
     ["پا", "pA", "Fuß"],
     ["پیپ", "pIp", "Pfeife"],
     ["تاب", "tAb", "Schaukel"],
@@ -257,7 +257,7 @@ const grunddata = [
 const mode_map = {
   // mode : [ abstract-mode, chap, data-set, intro ]
     script: ["oneway", false, scriptdata, "script_intro"],
-    Grundwortschatz: ["twoway", false, grunddata, "grund_intro"],
+    Grundwortschatz: ["c-oneway", false, grunddata, "grund_intro"],
 };
 
 // methods
@@ -267,6 +267,7 @@ function ltn2transcript(str) {
     str = str.replace(/U/g, "ū");
     str = str.replace(/_s/g, "s̱");
     str = str.replace(/\^g/g, "ǧ");
+    str = str.replace(/\^c/g, "č");
     str = str.replace(/c/g, "č");
     str = str.replace(/\.h/g, "ḥ");
     str = str.replace(/_h/g, "ḫ");
