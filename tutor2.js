@@ -2,6 +2,7 @@
 var playing = false;
 var transliterating = true;
 var chap = false;
+var multiple_choice = true;
 var last_invert = false;
 
 // global const
@@ -11,12 +12,16 @@ const repfailstr = "Repeat failed questions";
 var curfont = defaultfont;
 var curmode;
 var curdata;
+var curfields;
 var faildata = [];
 
 // counters
 var round = 1;
 var score = 0;
 var buttonNo = 1;
+
+
+// document setup
 
 document.addEventListener("DOMContentLoaded", () => {
     const inputField = document.getElementById("input");
@@ -41,6 +46,215 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// adders
+
+function addInput(input) {
+    let text_roman = translit_bracket(input);
+    let text_script = ascii_to_orig(input);
+    console.log(text_script);
+    
+    const mainDiv = document.getElementById("chat");
+
+    const userDiv = document.createElement("li");
+    const attUser = document.createAttribute("class");
+    attUser.value = "me";
+    userDiv.setAttributeNode(attUser);
+
+    const scriptDiv = document.createElement("div");
+    const attScript = document.createAttribute("class");
+    attScript.value = script + " " + curfont;
+    scriptDiv.setAttributeNode(attScript);
+    scriptDiv.innerHTML = `${text_script}`;
+
+    const romanDiv = document.createElement("div");
+    const attRoman = document.createAttribute("class");
+    attRoman.value = "ltn";
+    romanDiv.setAttributeNode(attRoman);
+    romanDiv.innerHTML = `${text_roman}`;
+
+    userDiv.appendChild(scriptDiv);
+    userDiv.appendChild(romanDiv);
+    mainDiv.appendChild(userDiv);
+}
+
+function addReplyG(reply) {
+    addReply(reply, "green");
+}
+
+function addReplyR(reply) {
+    addReply(reply, "red");
+}
+
+function addReplyL(reply) {
+    addReply(reply, script + "-large");
+}
+
+function addReply(reply, cl = "") {
+    const inputField = document.getElementById("input");
+
+    let sleep = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    };
+
+    const mainDiv = document.getElementById("chat");
+    const botDiv = document.createElement("li");
+    const botDivAtt = document.createAttribute("class");
+
+    botDivAtt.value = "bot " + " " + script + " " + curfont + " " + cl;
+    botDiv.setAttributeNode(botDivAtt);
+    botDiv.innerHTML = `${reply}`;
+
+    sleep(500).then(() => {
+        mainDiv.appendChild(botDiv);
+        inputField.scrollIntoView();
+    });
+}
+
+function translit_bracket(input) {
+    let out = input;
+
+    if (transliterating) {
+        if (input !== ascii_to_romanized(input)) {
+            out = ascii_to_romanized(input) + " [" + input + "]";
+        }
+
+        return out;
+    } else {
+        return out;
+    }
+}
+
+function addButtons(buttonArray, cmd, data = false, include_mc_toggle = false) {
+    const inputField = document.getElementById("input");
+    const id = buttonNo.toString();
+
+    let sleep = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    };
+
+    const mainDiv = document.getElementById("chat");
+    const botDiv = document.createElement("li");
+    const botDivId = document.createAttribute("id");
+    const botDivAtt = document.createAttribute("class");
+    botDivAtt.value = "bot ltn";
+    botDivId.value = "botdiv" + id;
+    botDiv.setAttributeNode(botDivAtt);
+    botDiv.setAttributeNode(botDivId);
+
+    sleep(500).then(() => {
+        mainDiv.appendChild(botDiv);
+
+	buttonArray.forEach((button) => {
+            const cbutton = document.createElement("button");
+            const buttonAtt = document.createAttribute("class");
+            buttonAtt.value = "button";
+            const id = buttonNo.toString();
+            buttonNo += 1;
+
+            cbutton.innerText = button;
+            cbutton.id = "button" + id;
+            cbutton.setAttributeNode(buttonAtt);
+
+            cbutton.addEventListener("click", () => {
+                if (!data) {
+                    cmd(button);
+                } else {
+                    cmd(button, data);
+                }
+            });
+
+	    document.getElementById(botDivId.value).appendChild(cbutton);
+        });
+	
+	if (include_mc_toggle) {
+	    const switchDiv = document.createElement("label");
+	    const switchDivAtt = document.createAttribute("class");
+	    switchDivAtt.value = "switchdiv";
+	    switchDiv.setAttributeNode(switchDivAtt);
+
+	    const leftDiv = document.createElement("div");
+	    const leftDivAtt = document.createAttribute("class");
+	    leftDivAtt.value = "ltn left-div";
+	    leftDiv.setAttributeNode(leftDivAtt);
+	    leftDiv.innerHTML = `<b>free typing</b>`;
+
+	    const rightDiv = document.createElement("div");
+	    const rightDivAtt = document.createAttribute("class");
+	    rightDivAtt.value = "ltn right-div";
+	    rightDiv.setAttributeNode(rightDivAtt);
+	    rightDiv.innerHTML = `<b>multiple choice</b>`;
+	    
+	    const switchLabel = document.createElement("label");
+	    const switchLabelAtt = document.createAttribute("class");
+	    switchLabelAtt.value = "switch";
+	    switchLabel.setAttributeNode(switchLabelAtt);
+	    
+	    const inputDiv = document.createElement("input");
+	    const inputDivAtt = document.createAttribute("type");
+	    inputDivAtt.value = "checkbox";
+	    inputDiv.setAttributeNode(inputDivAtt);
+	    // checked initially
+	    inputDiv.setAttribute("checked", "checked");
+	    
+	    const sliderDiv = document.createElement("span");
+	    const sliderDivAtt = document.createAttribute("class");
+	    sliderDivAtt.value = "slider round";
+	    sliderDiv.setAttributeNode(sliderDivAtt);
+
+	    const onCheckboxChange = () => {
+                multiple_choice = inputDiv.checked;
+            };
+
+            inputDiv.addEventListener("change", onCheckboxChange);
+	    
+	    // Add inputDiv and sliderDiv to switchDiv
+	    switchLabel.appendChild(inputDiv);
+	    switchLabel.appendChild(sliderDiv);
+
+	    switchDiv.appendChild(leftDiv);
+	    switchDiv.appendChild(switchLabel);
+	    switchDiv.appendChild(rightDiv);
+
+	    document.getElementById(botDivId.value).appendChild(switchDiv);
+	};
+	
+        inputField.scrollIntoView();
+    });
+}
+
+function process(input) {
+    addInput(input);
+
+    if (commands.includes(input)) {
+        follow_command(commands.indexOf(input));
+    } else if (playing) {
+        set_question_answer(input);
+    } else {
+        mode_choice();
+    }
+}
+
+function follow_command(index) {
+    switch (index) {
+    case 0: // help
+        addReply(dia.help);
+        repeat_if_playing();
+        break;
+    case 1: // script table
+        addReply(table);
+        repeat_if_playing();
+        break;
+    case 2: // change font
+        addButtons(fonts, changefont);
+        // repeat_if_playing();
+        break;
+    case 3: // change mode
+        playing = false;
+        mode_choice();
+        break;
+    }
+}
 
 function resetroundscore() {
     round = 1;
@@ -83,11 +297,11 @@ function mode_choice() {
     addReply(dia.choice);
 
     if (faildata.length == 0 || !faildata) {
-        addButtons(modes, changemode);
+        addButtons(modes, changemode, false, true);
         return;
     }
 
-    addButtons([repfailstr].concat(modes), changemode);
+    addButtons([repfailstr].concat(modes), changemode, false, true);
 }
 
 function exercise(data, index, random_invert = true) {
@@ -105,7 +319,7 @@ function exercise(data, index, random_invert = true) {
             exercise_root(curdata, index);
             break;
         case "c-oneway": // i.e. choice one-way
-            exercise_coneway(data, index);
+            exercise_oneway(data, index);
             
             let arr = shuffleArray(create_choice_array(4, data[index], 2));
 
@@ -121,11 +335,6 @@ function exercise(data, index, random_invert = true) {
 
 function exercise_oneway(array, index) {
     transliterating = true;
-    addReplyL(array[index][0]);
-}
-
-function exercise_coneway(array, index) {
-    transliterating = false;
     addReplyL(array[index][0]);
 }
 
@@ -149,18 +358,6 @@ function exercise_twoway(array, index, random_invert = true) {
 function exercise_root(array, index) {
     transliterating = true;
     addReplyL(array[index][0]);
-}
-
-function process(input) {
-    display_input(input);
-
-    if (commands.includes(input)) {
-        follow_command(commands.indexOf(input));
-    } else if (playing) {
-        set_question_answer(input);
-    } else {
-        mode_choice();
-    }
 }
 
 function set_question_answer(input) {
@@ -213,7 +410,6 @@ function set_question_answer(input) {
         break;
 
     case "c-oneway":
-	transliterating = false;
         question = cur[0] + " " + cur[1];
         answer = cur[2];
 
@@ -271,9 +467,9 @@ function compare_with_answer(input,
             dia.incorrect +
             " <b>" +
             question +
-            '<span class="ltn"> ' +
+            '<div class="ltn"> ' +
             translit_bracket(answer) +
-            "</span></b> " +
+            "</div></b> " +
             dia.correction +
             quota();
         if (curmode !== "c-oneway" && curmode != "root") {
@@ -284,135 +480,6 @@ function compare_with_answer(input,
     }
 
     exercise(curdata, round - 1);
-}
-
-function display_input(input) {
-    addInput(translit_bracket(input));
-}
-
-function follow_command(index) {
-    switch (index) {
-    case 0: // help
-        addReply(dia.help);
-        repeat_if_playing();
-        break;
-    case 1: // script table
-        addReply(table);
-        repeat_if_playing();
-        break;
-    case 2: // change font
-        addButtons(fonts, changefont);
-        // repeat_if_playing();
-        break;
-    case 3: // change mode
-        playing = false;
-        mode_choice();
-        break;
-    }
-}
-
-function translit_bracket(input) {
-    let out = input;
-
-    if (transliterating) {
-        if (input !== ltn2transcript(input)) {
-            out = ltn2transcript(input) + " [" + input + "]";
-        }
-
-        return out;
-    } else {
-        return out;
-    }
-}
-
-function addInput(input) {
-    const mainDiv = document.getElementById("chat");
-
-    const userDiv = document.createElement("li");
-    const attUser = document.createAttribute("class");
-    attUser.value = "me ltn";
-
-    userDiv.setAttributeNode(attUser);
-    userDiv.innerHTML = `${input}`;
-    mainDiv.appendChild(userDiv);
-}
-
-function addReplyG(reply) {
-    addReply(reply, "green");
-}
-
-function addReplyR(reply) {
-    addReply(reply, "red");
-}
-
-function addReplyL(reply) {
-    addReply(reply, script + "-large");
-}
-
-function addReply(reply, cl = "") {
-    const inputField = document.getElementById("input");
-
-    let sleep = (ms) => {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-    };
-
-    const mainDiv = document.getElementById("chat");
-    const botDiv = document.createElement("li");
-    const botDivAtt = document.createAttribute("class");
-
-    botDivAtt.value = "bot " + " " + script + " " + curfont + " " + cl;
-    botDiv.setAttributeNode(botDivAtt);
-    botDiv.innerHTML = `${reply}`;
-
-    sleep(500).then(() => {
-        mainDiv.appendChild(botDiv);
-        inputField.scrollIntoView();
-    });
-}
-
-function addButtons(buttonArray, cmd, data = false) {
-    const inputField = document.getElementById("input");
-    const id = buttonNo.toString();
-
-    let sleep = (ms) => {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-    };
-
-    const mainDiv = document.getElementById("chat");
-    const botDiv = document.createElement("li");
-    const botDivId = document.createAttribute("id");
-    const botDivAtt = document.createAttribute("class");
-    botDivAtt.value = "bot ltn";
-    botDivId.value = "botdiv" + id;
-    botDiv.setAttributeNode(botDivAtt);
-    botDiv.setAttributeNode(botDivId);
-
-    sleep(500).then(() => {
-        mainDiv.appendChild(botDiv);
-
-        buttonArray.forEach((button) => {
-            const cbutton = document.createElement("button");
-            const buttonAtt = document.createAttribute("class");
-            buttonAtt.value = "button";
-            const id = buttonNo.toString();
-            buttonNo += 1;
-
-            cbutton.innerText = button;
-            cbutton.id = "button" + id;
-            cbutton.setAttributeNode(buttonAtt);
-
-            cbutton.addEventListener("click", () => {
-                if (!data) {
-                    cmd(button);
-                } else {
-                    cmd(button, data);
-                }
-            });
-            document.getElementById(botDivId.value).appendChild(cbutton);
-        });
-
-        inputField.scrollIntoView();
-    });
 }
 
 function repeat_if_playing() {
@@ -441,8 +508,9 @@ function changemode(mode) {
 
     curmode = mode_map[mode][0];
     chap = mode_map[mode][1];
+    curfields = mode_map[mode][3];
 
-    var curintro = mode_map[mode][3];
+    var curintro = mode_map[mode][4];
     addReplyG(dia[curintro]);
 
     if (chap) {
@@ -490,23 +558,7 @@ function add_button_value(str, array) {
 
 function quota() {
     let out = "";
-    out = num2scriptstr(score) + "/" + num2scriptstr(round);
+    out = number_to_origstr(score) + "/" + number_to_origstr(round);
     return out;
 }
 
-// remove later
-
-function num2mongolstr(n) {
-    let nstr = n.toString(10);
-    nstr = nstr.replace(/0/g, "᠐");
-    nstr = nstr.replace(/1/g, "᠑");
-    nstr = nstr.replace(/2/g, "᠒");
-    nstr = nstr.replace(/3/g, "᠓");
-    nstr = nstr.replace(/4/g, "᠔");
-    nstr = nstr.replace(/5/g, "᠕");
-    nstr = nstr.replace(/6/g, "᠖");
-    nstr = nstr.replace(/7/g, "᠗");
-    nstr = nstr.replace(/8/g, "᠘");
-    nstr = nstr.replace(/9/g, "᠙");
-    return nstr;
-}

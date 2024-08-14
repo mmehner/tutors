@@ -5,14 +5,14 @@ const fonts = [ "Adishila", "AdishilaDev", "AdishilaSan", "AdishilaSamskrta", "A
 
 const defaultfont = "Shobhika";
 
-const modes = [ "script", "Grundkurs Vokabeln", "verb forms", "Cappeller Vokabeln (Sanskrt-Deutsch)" ];
+const modes = [ "script", "Grundkurs Vokabeln", "verb forms" ];
 
 const field = {
     "question" : 0,
     "answer" : 1,
 };
 
-const commands = [ "help", "lipi", "mudrAkSara", "abhyAsa" ];
+const commands = [ "help", "lipi", "mudrAkSara", "abhyAsa", ];
 
 const dia = {
     "intro" :  "स्वागतम्।",
@@ -26,7 +26,6 @@ const dia = {
     "script_intro" : '<span class="ltn">Transcribe the following syllables.<br/>To display the transliteration table type</span> लिपि <span class="ltn"><i>lipi</i>,<br/> to change the Nāgarī font type </span> मुद्राक्षर <span class="ltn"><i>mudrAkSara</i>.</span>',
     "vocab_intro" : '<span class="ltn">Wählen Sie eine Lektion und übersetzen Sie:</span>',
     "verb_intro" : '<span class="ltn">The following verb forms are taken from the <a class="chat" href="https://www.iet-verlag.de/ser_ext.html">Sanskrit-Vademecum</a>.<br/>Step 1: Identify the correct verbal root or denominal base of a given verb form.<br/> Step 2: Choose the correct designation of the form.</span>',
-    "dict_intro" : '<span class="ltn">Welche Bedeutungsangabe gehört zu welchem Lemma?</span>',
 };
 
 const table = '<table class="deva-large" style="text-align: center; vertical-align: middle;">' +
@@ -71,7 +70,13 @@ const table = '<table class="deva-large" style="text-align: center; vertical-ali
       '<td>अः</td>' +
       '<td class="ltn-small">aḥ [aH]</td>' +
       '<td>ऽ</td>' +
-      '<td class="ltn-small">\'</td>' +
+      '<td class="ltn-small">’</td>' +
+      '<td/>' +
+      '<td/>' +
+      '<td/>' +
+      '<td/>' +
+      '<td>ॐ</td>' +
+      '<td class="ltn-small">OM</td>' +
       '</tr>' +
       '<tr class="blank-row"/>' +
       '<tr>' +
@@ -160,7 +165,8 @@ const table = '<table class="deva-large" style="text-align: center; vertical-ali
       '</tr>' +
       '</table>';
 
-const scriptdata = [["ॐ", "oM"],
+const scriptdata_fields = { orig:0, ascii:1}
+const scriptdata = [["ॐ", "OM"],
 		    ["अ", "a"],
 		    ["आ", "A"],
 		    ["इ", "i"],
@@ -2047,6 +2053,7 @@ const scriptdata = [["ॐ", "oM"],
 		    ["९", "9"],
 		    ["ऽ", "'"]];
 
+const vocabdata_fields = { orig:0, ascii:1, meaning:2}
 const vocabdata = {
     "Lektion 1" : [["अश्वः","azvaH","Pferd"],
 		   ["कन्या","kanyA","Mädchen"],
@@ -2093,6 +2100,8 @@ const vocabdata = {
 		   ["स्था","sthA","stehenbleiben; verweilen"],
 		   ["स्पृश्","spRz","berühren"]],
 };
+
+const verbdata_fields = { orig:0, root_orig:1, root_ascii:2, form:3};
 
 const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II  Ā)","adhi-i\|adhI","imperative"],
 		  ["अधीष्व","अधि-इ । अधी  (II  Ā)","adhi-i\|adhI","imperative"],
@@ -2449,7 +2458,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["भक्ष्य","भक्ष्  (X PĀ)","bhakS","gerundive"],
 		  ["भक्ष्यते","भक्ष्  (X PĀ)","bhakS","present passive"],
 		  ["बिभक्षयिषति","भक्ष्  (X PĀ)","bhakS","desiderative indicative"],
-		  ["चकार","भक्ष्  (X PĀ)","bhakS","periphrastic perfect"],
+		  ["भक्षयां चकार","भक्ष्  (X PĀ)","bhakS","periphrastic perfect"],
 		  ["निभालयते","भल्  (X Ā)","bhal","indicative"],
 		  ["निभालयति","भल्  (X Ā)","bhal","indicative"],
 		  ["निभालयितुम्","भल्  (X Ā)","bhal","infinitive"],
@@ -2484,7 +2493,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["भर्त्सयित्वा","भर्त्स्  (X Ā)","bharts","absolutive"],
 		  ["भर्त्सित","भर्त्स्  (X Ā)","bharts","past participle"],
 		  ["भर्त्स्यते","भर्त्स्  (X Ā)","bharts","present passive"],
-		  ["चकार","भर्त्स्  (X Ā)","bharts","periphrastic perfect"],
+		  ["भर्त्सयां चकार","भर्त्स्  (X Ā)","bharts","periphrastic perfect"],
 		  ["अभाषिषि","भाष्  (I Ā)","bhAS","aorist"],
 		  ["अभाषिष्ट","भाष्  (I Ā)","bhAS","aorist"],
 		  ["बभासे","भास्  (I Ā)","bhAs","perfect"],
@@ -2838,7 +2847,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["चेष्टितुम्","चेष्ट्  (I Ā)","ceST","infinitive"],
 		  ["चेष्टित्वा","चेष्ट्  (I Ā)","ceST","absolutive"],
 		  ["चिचेष्ट","चेष्ट्  (I Ā)","ceST","perfect"],
-		  ["चकार","छद्  (X PĀ)","chad","periphrastic perfect"],
+		  ["चादयां चकार","छद्  (X PĀ)","chad","periphrastic perfect"],
 		  ["छादयामास","छद्  (X PĀ)","chad","periphrastic perfect"],
 		  ["छादयते","छद्  (X PĀ)","chad","indicative"],
 		  ["छादयति","छद्  (X PĀ)","chad","indicative"],
@@ -2869,7 +2878,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["चिच्छिदे","छिद्  (VII PĀ)","chid","perfect"],
 		  ["चिह्नयति","चिह्नय्  (Denom.)","cihnay","indicative"],
 		  ["चिह्नित","चिह्नय्  (Denom.)","cihnay","past participle"],
-		  ["चकार","चिन्त्  (X PĀ)","cint","periphrastic perfect"],
+		  ["चिन्तयां चकार","चिन्त्  (X PĀ)","cint","periphrastic perfect"],
 		  ["चिन्तनीय","चिन्त्  (X PĀ)","cint","gerundive"],
 		  ["चिन्तयामास","चिन्त्  (X PĀ)","cint","periphrastic perfect"],
 		  ["चिन्तयते","चिन्त्  (X PĀ)","cint","indicative"],
@@ -3651,7 +3660,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["जङ्गन्ति","गम्  (I P)","gam","intensive indicative"],
 		  ["जिगमिषति","गम्  (I P)","gam","desiderative indicative"],
 		  ["अजीगणत्","गण्  (X PĀ)","gaN","aorist"],
-		  ["चकार","गण्  (X PĀ)","gaN","periphrastic perfect"],
+		  ["गणयां चकार","गण्  (X PĀ)","gaN","periphrastic perfect"],
 		  ["गणनीय","गण्  (X PĀ)","gaN","gerundive"],
 		  ["गणयामास","गण्  (X PĀ)","gaN","periphrastic perfect"],
 		  ["गणयते","गण्  (X PĀ)","gaN","indicative"],
@@ -4275,7 +4284,6 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["अजागरम्","जागृ  (II P)","jAgR","imperfect"],
 		  ["अजागरुः","जागृ  (II P)","jAgR","imperfect"],
 		  ["अजागृताम्","जागृ  (II P)","jAgR","imperfect"],
-		  ["चकार","जागृ  (II P)","jAgR","periphrastic perfect"],
 		  ["जागरामास","जागृ  (II P)","jAgR","periphrastic perfect"],
 		  ["जागराणि","जागृ  (II P)","jAgR","imperative"],
 		  ["जागरणीय","जागृ  (II P)","jAgR","gerundive"],
@@ -4516,7 +4524,6 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["कास्यते","कस्  (I P)","kas","causative passive"],
 		  ["अचकथत्","कथ्  (X P)","kath","aorist"],
 		  ["अचीकथत्","कथ्  (X P)","kath","aorist"],
-		  ["चकार","कथ्  (X P)","kath","periphrastic perfect"],
 		  ["कथनीय","कथ्  (X P)","kath","gerundive"],
 		  ["कथयामास","कथ्  (X P)","kath","periphrastic perfect"],
 		  ["कथयति","कथ्  (X P)","kath","indicative"],
@@ -4827,7 +4834,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["°कीर्य","कॄ  (VI P)","kRR","gerundive"],
 		  ["कीर्यते","कॄ  (VI P)","kRR","present passive"],
 		  ["कीर्यात्","कॄ  (VI P)","kRR","optative"],
-		  ["चकार","क्षल्  (X PĀ)","kSal","periphrastic perfect"],
+		  ["क्षालयां चकार","क्षल्  (X PĀ)","kSal","periphrastic perfect"],
 		  ["क्षालयामास","क्षल्  (X PĀ)","kSal","periphrastic perfect"],
 		  ["क्षालयति","क्षल्  (X PĀ)","kSal","indicative"],
 		  ["क्षालयितुम्","क्षल्  (X PĀ)","kSal","infinitive"],
@@ -5264,7 +5271,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["मिमङ्क्षति","मज्ज्  (VI P)","majj","desiderative indicative"],
 		  ["मलिनयति","मलिनय्  (Denom.)","malinay","indicative"],
 		  ["मलिनित","मलिनय्  (Denom.)","malinay","past participle"],
-		  ["चकार","मण्ड्  (X PĀ)","maND","periphrastic perfect"],
+		  ["मण्डयां चकार","मण्ड्  (X PĀ)","maND","periphrastic perfect"],
 		  ["मण्डयामास","मण्ड्  (X PĀ)","maND","periphrastic perfect"],
 		  ["मण्डयते","मण्ड्  (X PĀ)","maND","indicative"],
 		  ["मण्डयति","मण्ड्  (X PĀ)","maND","indicative"],
@@ -5288,7 +5295,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["°मत्य","मन्  (IV Ā, VIII Ā)","man","absolutive"],
 		  ["मेने","मन्  (IV Ā, VIII Ā)","man","perfect"],
 		  ["मीमांसते","मन्  (IV Ā, VIII Ā)","man","desiderative indicative"],
-		  ["चकार","मन्त्र्  (X Ā)","mantr","periphrastic perfect"],
+		  ["मन्त्रयां चकार","मन्त्र्  (X Ā)","mantr","periphrastic perfect"],
 		  ["मन्त्रणीय","मन्त्र्  (X Ā)","mantr","gerundive"],
 		  ["मन्त्रयामास","मन्त्र्  (X Ā)","mantr","periphrastic perfect"],
 		  ["मन्त्रयते","मन्त्र्  (X Ā)","mantr","indicative"],
@@ -5409,7 +5416,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["मृद्नाति","मृद्  (IX P)","mRd","indicative"],
 		  ["°मृद्य","मृद्  (IX P)","mRd","absolutive"],
 		  ["मृद्यते","मृद्  (IX P)","mRd","present passive"],
-		  ["चकार","मृग्  (X Ā)","mRg","periphrastic perfect"],
+		  ["मृगयां चकार","मृग्  (X Ā)","mRg","periphrastic perfect"],
 		  ["मृगयामास","मृग्  (X Ā)","mRg","periphrastic perfect"],
 		  ["मृगयते","मृग्  (X Ā)","mRg","indicative"],
 		  ["मृगयिष्यते","मृग्  (X Ā)","mRg","future"],
@@ -5883,7 +5890,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["फेलिरे","फल्   (I P)","phal","perfect"],
 		  ["फेलुः","फल्   (I P)","phal","perfect"],
 		  ["फुल्ल","फल्   (I P)","phal","past participle"],
-		  ["चकार","पीड्  (X PĀ)","pID","periphrastic perfect"],
+		  ["पीडयां चकार","पीड्  (X PĀ)","pID","periphrastic perfect"],
 		  ["पीडनीय","पीड्  (X PĀ)","pID","gerundive"],
 		  ["पीडयामास","पीड्  (X PĀ)","pID","periphrastic perfect"],
 		  ["पीडयते","पीड्  (X PĀ)","pID","indicative"],
@@ -5997,7 +6004,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["पूत","पू  (IX PĀ)","pU","past participle"],
 		  ["पूयते","पू  (IX PĀ)","pU","present passive"],
 		  ["अपूपुजत्","पूज्  (X PĀ)","pUj","aorist"],
-		  ["चकार","पूज्  (X PĀ)","pUj","periphrastic perfect"],
+		  ["पूजयां चकार","पूज्  (X PĀ)","pUj","periphrastic perfect"],
 		  ["पूजनीय","पूज्  (X PĀ)","pUj","gerundive"],
 		  ["पूजयामास","पूज्  (X PĀ)","pUj","periphrastic perfect"],
 		  ["पूजयते","पूज्  (X PĀ)","pUj","indicative"],
@@ -6018,7 +6025,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["पुष्यते","पुष्  (IV P, IX P)","puS","indicative"],
 		  ["पुष्यते","पुष्  (IV P, IX P)","puS","present passive"],
 		  ["पुष्यति","पुष्  (IV P, IX P)","puS","indicative"],
-		  ["चकार","पुथ्  (X PĀ, IV P)","puth","periphrastic perfect"],
+		  ["योथयां चकार","पुथ्  (X PĀ, IV P)","puth","periphrastic perfect"],
 		  ["पोथयामास","पुथ्  (X PĀ, IV P)","puth","periphrastic perfect"],
 		  ["पोथयते","पुथ्  (X PĀ, IV P)","puth","indicative"],
 		  ["पोथयति","पुथ्  (X PĀ, IV P)","puth","indicative"],
@@ -6456,7 +6463,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["°शङ्क्य","शङ्क्  (I Ā)","zaGk","gerundive"],
 		  ["शङ्क्यते","शङ्क्  (I Ā)","zaGk","present passive"],
 		  ["शशङ्के","शङ्क्  (I Ā)","zaGk","perfect"],
-		  ["चकार","सान्त्व्  (X PĀ)","sAntv","periphrastic perfect"],
+		  ["सान्त्वयां चकार","सान्त्व्  (X PĀ)","sAntv","periphrastic perfect"],
 		  ["सान्त्वयामास","सान्त्व्  (X PĀ)","sAntv","periphrastic perfect"],
 		  ["सान्त्वयते","सान्त्व्  (X PĀ)","sAntv","indicative"],
 		  ["सान्त्वयति","सान्त्व्  (X PĀ)","sAntv","indicative"],
@@ -7312,7 +7319,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["तर्जयति","तर्ज्  (I P)","tarj","causative indicative"],
 		  ["तर्जित","तर्ज्  (I P)","tarj","past participle"],
 		  ["°तर्ज्य","तर्ज्  (I P)","tarj","absolutive"],
-		  ["चकार","तर्क्  (X PĀ)","tark","periphrastic perfect"],
+		  ["तर्कयां चकार","तर्क्  (X PĀ)","tark","periphrastic perfect"],
 		  ["तर्कणीय","तर्क्  (X PĀ)","tark","gerundive"],
 		  ["तर्कयामास","तर्क्  (X PĀ)","tark","periphrastic perfect"],
 		  ["तर्कयते","तर्क्  (X PĀ)","tark","indicative"],
@@ -7666,7 +7673,7 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["वप्स्यति","वप्  (I PĀ)","vap","future"],
 		  ["वप्तव्य","वप्  (I PĀ)","vap","gerundive"],
 		  ["वाप्य","वप्  (I PĀ)","vap","gerundive"],
-		  ["चकार","वर्ण्  (X PĀ)","varN","periphrastic perfect"],
+		  ["वर्णयां चकार","वर्ण्  (X PĀ)","varN","periphrastic perfect"],
 		  ["वर्णनीय","वर्ण्  (X PĀ)","varN","gerundive"],
 		  ["वर्णयामास","वर्ण्  (X PĀ)","varN","periphrastic perfect"],
 		  ["वर्णयति","वर्ण्  (X PĀ)","varN","indicative"],
@@ -8213,45 +8220,139 @@ const verbdata = [["अधीध्वम्","अधि-इ । अधी  (II 
 		  ["युयुक्षति","युज्  (VII PĀ)","yuj","desiderative indicative"],];
 
 // mode map must come after data 
-const mode_map = { // mode : [ abstract-mode, chap, data-set, intro ]
-    "script"             : [ "oneway", false, scriptdata, "script_intro" ],
-    "Grundkurs Vokabeln" : [ "twoway",  true, vocabdata,  "vocab_intro"  ],
-    "verb forms"         : [ "root",   false, verbdata,   "verb_intro"   ],
-    "Cappeller Vokabeln (Sanskrt-Deutsch)" : [ "c-oneway", false, dictdata, "dict_intro"   ],
+const mode_map = { // mode : [ abstract-mode, chap, data-set, fields, intro ]
+    "script"             : [ "oneway", false, scriptdata, scriptdata_fields, "script_intro" ],
+    "Grundkurs Vokabeln" : [ "twoway",  true, vocabdata, vocabdata_fields, "vocab_intro"  ],
+    "verb forms"         : [ "root",   false, verbdata, verbdata_fields, "verb_intro"   ],
 }
 
-// methods
-function ltn2transcript(str) {
-    str = str.replace(/A/g, "ā");
-    str = str.replace(/I/g, "ī");
-    str = str.replace(/U/g, "ū");
-    str = str.replace(/lRR/g, "ḹ");
-    str = str.replace(/lR/g, "ḷ");
-    str = str.replace(/RR/g, "ṝ");
-    str = str.replace(/R/g, "ṛ");
-    str = str.replace(/M/g, "ṃ");
-    str = str.replace(/H/g, "ḥ");
-    str = str.replace(/G/g, "ṅ");
-    str = str.replace(/J/g, "ñ");
-    str = str.replace(/T/g, "ṭ");
-    str = str.replace(/D/g, "ḍ");
-    str = str.replace(/N/g, "ṇ");
-    str = str.replace(/z/gi, "ś");
-    str = str.replace(/S/g, "ṣ");
+// script-specific methods
+const hk_to_iast = [
+    [/A/g, "ā"],
+    [/I/g, "ī"],
+    [/U/g, "ū"],
+    [/lRR/g, "ḹ"],
+    [/lR/g, "ḷ"],
+    [/RR/g, "ṝ"],
+    [/R/g, "ṛ"],
+    [/M/g, "ṃ"],
+    [/H/g, "ḥ"],
+    [/G/g, "ṅ"],
+    [/J/g, "ñ"],
+    [/T/g, "ṭ"],
+    [/D/g, "ḍ"],
+    [/N/g, "ṇ"],
+    [/z/gi, "ś"],
+    [/S/g, "ṣ"],
+    [/'/g, "’"],
+];
+
+function ascii_to_romanized(str) {
+    for (let i = 0; i < hk_to_iast.length; i++) {
+	str = str.replace(hk_to_iast[i][0], hk_to_iast[i][1]);
+    }
+    
     return str;
 }
 
-function num2scriptstr(n) {
+const iast_to_deva = [
+    [/O[Mmṃ]/g, 'ॐ'],
+    [/([kgṅcjñṭḍṇtdnpbmyrlvśṣsh]h?) */g,'$1्'],
+    [/् *ai/g,'ै'],
+    [/् *au/g,'ौ'],
+    [/् *a/g,'_'],
+    [/् *ā/g,'ा'],
+    [/् *i/g,'ि'],
+    [/् *ī/g,'ी'],
+    [/् *u/g,'ु'],
+    [/् *ū/g,'ू'],
+    [/् *ṛ/g,'ृ'],
+    [/् *ṝ/g,'ॄ'],
+    [/् *ḷ/g,'ॢ'],
+    [/् *ḹ/g,'ॣ'],
+    [/् *e/g,'े'],
+    [/् *o/g,'ो'],
+    [/’/g, 'ऽ'],
+    [/ṃ/g, 'ं'],
+    [/ḥ/g, 'ः'],
+    [/kh/g,'ख'],
+    [/gh/g,'घ'],
+    [/ch/g,'छ'],
+    [/jh/g,'झ'],
+    [/ṭh/g,'ठ'],
+    [/ḍh/g,'ढ'],
+    [/th/g,'थ'],
+    [/dh/g,'ध'],
+    [/ph/g,'फ'],
+    [/bh/g,'भ'],
+    [/k/g,'क'],
+    [/g/g,'ग'],
+    [/ṅ/g,'ङ'],
+    [/c/g,'च'],
+    [/j/g,'ज'],
+    [/ñ/g,'ञ'],
+    [/ṭ/g,'ट'],
+    [/ḍ/g,'ड'],
+    [/ṇ/g,'ण'],
+    [/t/g,'त'],
+    [/d/g,'द'],
+    [/n/g,'न'],
+    [/p/g,'प'],
+    [/b/g,'ब'],
+    [/m/g,'म'],
+    [/y/g,'य'],
+    [/r/g,'र'],
+    [/l/g,'ल'],
+    [/v/g,'व'],
+    [/ś/g,'श'],
+    [/ṣ/g,'ष'],
+    [/s/g,'स'],
+    [/h/g,'ह'],
+    [/_/g,''],
+    [/ai/g,'ऐ'],
+    [/au/g,'औ'],
+    [/a/g,'अ'],
+    [/ā/g,'आ'],
+    [/i/g,'इ'],
+    [/ī/g,'ई'],
+    [/u/g,'उ'],
+    [/ū/g,'ऊ'],
+    [/ṛ/g,'ऋ'],
+    [/ṝ/g,'ॠ'],
+    [/ḷ/g,'लृ'],
+    [/e/g,'ए'],
+    [/o/g,'ओ'],
+    [/\/\//g,' ॥'],
+    [/\//g,' ।'],
+    [/0/g, "०"],
+    [/1/g, "१"],
+    [/2/g, "२"],
+    [/3/g, "३"],
+    [/4/g, "४"],
+    [/5/g, "५"],
+    [/6/g, "६"],
+    [/7/g, "७"],
+    [/8/g, "८"],
+    [/9/g, "९"],
+];
+
+function romanized_to_orig(str) {
+    for (let i = 0; i < iast_to_deva.length; i++) {
+	str = str.replace(iast_to_deva[i][0], iast_to_deva[i][1]);
+    };
+    
+    return str;
+}
+
+function ascii_to_orig(str) {
+    str = ascii_to_romanized(str);
+    str = romanized_to_orig(str);
+
+    return str;
+}
+
+function number_to_origstr(n) {
     let nstr = n.toString(10);
-    nstr = nstr.replace(/0/g, "०");
-    nstr = nstr.replace(/1/g, "१");
-    nstr = nstr.replace(/2/g, "२");
-    nstr = nstr.replace(/3/g, "३");
-    nstr = nstr.replace(/4/g, "४");
-    nstr = nstr.replace(/5/g, "५");
-    nstr = nstr.replace(/6/g, "६");
-    nstr = nstr.replace(/7/g, "७");
-    nstr = nstr.replace(/8/g, "८");
-    nstr = nstr.replace(/9/g, "९");
-    return nstr;
+    
+    return romanized_to_orig(nstr);
 }
