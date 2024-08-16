@@ -107,8 +107,8 @@ function exercise(data, index, random_invert = true) {
         case "c-oneway": // i.e. choice one-way
             exercise_coneway(data, index);
             
-            let arr = shuffleArray(create_choice_array(4, data[index], 2));
-
+            let arr = shuffleArray(choice_array(5, data[index], 2));
+	    
             addButtons(arr, process);
             break;
         }
@@ -201,7 +201,7 @@ function set_question_answer(input) {
         if ((multi && input.match(answer)) || (!multi && input === answer)) {
             answer = input + " " + cur[3];
 
-            let arr = shuffleArray(create_choice_array(4, cur, 3));
+            let arr = shuffleArray(random_choice_array(4, cur, 3));
 
             addButtons(arr, add_button_value, [input, question, answer]);
         } else {
@@ -239,7 +239,7 @@ function strip_additions(str) {
     return nstr;
 }
 
-function create_choice_array(number, curset, idx) {
+function random_choice_array(number, curset, idx) {
     let arr = [curset[idx]];
     let i = curdata.length - 1;
 
@@ -248,6 +248,21 @@ function create_choice_array(number, curset, idx) {
         if (!arr.includes(curdata[n][idx])) {
             arr.push(curdata[n][idx]);
         }
+    }
+
+    return arr;
+}
+
+
+function choice_array(number, curset, idx) {
+    let arr = [curset[idx]];
+    let i = 1;
+
+    while (arr.length < number) {
+        if (!arr.includes(curdata[round - 1 + i][idx])) {
+            arr.push(curdata[round - 1 + i][idx]);
+        }
+	i += 1;
     }
 
     return arr;

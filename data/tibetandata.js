@@ -1759,11 +1759,7 @@ const grunddata = [
   ["ལྷ་ས་", "Lha-sa", "Lhasa"],
   ["ཡུལ་ལྷ་", "yul lha", "lokale Gottheit"],
   ["བླ་མ་", "bla ma", "religiöser Lehrer"],
-  [
-    "མཆོད་རྟེན་",
-    "mchod rten",
-    "buddhistischer Reliquienschrein (Sanskrit: stūpa)",
-  ],
+  ["མཆོད་རྟེན་","mchod rten", "buddhistischer Reliquienschrein (Sanskrit: stūpa)"],
   ["གཏེར་མ་", "gter ma", "Schatz"],
   ["གཏེར་སྟོན་", "gter ston", "Schatzfinder"],
   ["འདོགས་ཁྱི་", "'dogs khyi", "Tibetdogge"],
