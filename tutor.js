@@ -107,7 +107,7 @@ function exercise(data, index, random_invert = true) {
         case "c-oneway": // i.e. choice one-way
             exercise_coneway(data, index);
             
-            let arr = shuffleArray(choice_array(5, data[index], 2));
+            let arr = shuffleArray(random_choice_array(5, data[index], 2));
 	    
             addButtons(arr, process);
             break;
